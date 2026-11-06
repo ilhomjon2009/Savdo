@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>СабзБозор — рынок Исфары</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#f4f3ef;--cd:#fff;--tx:#1b1b1b;--mu:#76736d;--ac:#fc0;--bd:#e4e1da;--ok:#1a9a4a;--er:#d6383d;color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151515;--cd:#202020;--tx:#f2f2f2;--mu:#9d9a94;--bd:#363636;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#151515;--cd:#202020;--tx:#f2f2f2;--mu:#9d9a94;--bd:#363636;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--ac);z-index:10}
+header{background:var(--ac);position:sticky;top:env(safe-area-inset-top,0px);z-index:9;color:#1b1b1b}
+.top{max-width:1100px;margin:auto;padding:10px 12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.logo{font-weight:800;font-size:21px;color:#1b1b1b;text-decoration:none;letter-spacing:-.5px}
+.logo b{background:#1b1b1b;color:var(--ac);padding:0 6px;border-radius:6px;margin-left:3px}
+#q{order:3;flex:1 1 100%;background:#fff;color:#1b1b1b;border:0}
+@media(min-width:700px){#q{order:0;flex:1 1 300px}}
+nav{display:flex;gap:14px;margin-left:auto}
+nav a{color:#1b1b1b;text-decoration:none;font-weight:600}
+main{max-width:1100px;margin:auto;padding:14px 12px 60px}
+h1{font-size:24px;margin:4px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.card{background:var(--cd);border:1px solid var(--bd);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:4px}
+.im{background:var(--bg);border-radius:10px;font-size:54px;text-align:center;padding:14px 0;cursor:pointer}
+.pr{font-weight:800;font-size:19px}.lg{font-size:26px}
+.tt{cursor:pointer;font-weight:500}
+.mu{color:var(--mu);font-size:13px}
+.btn{background:var(--ac);color:#1b1b1b;border:0;border-radius:10px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;text-align:center;margin-top:auto}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.sec{background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px}
+.chip{white-space:nowrap;border:1px solid var(--bd);background:var(--cd);color:var(--tx);border-radius:20px;padding:6px 13px;cursor:pointer;font:inherit}
+.chip.on{background:var(--ac);color:#1b1b1b;border-color:var(--ac);font-weight:600}
+.filters{display:flex;gap:8px;margin:6px 0 12px;flex-wrap:wrap}
+.filters input{width:105px}
+input,select,textarea{font:inherit;padding:9px 11px;border:1px solid var(--bd);border-radius:10px;background:var(--cd);color:var(--tx);min-width:0}
+:focus-visible{outline:2px solid var(--tx);outline-offset:2px}
+.row{display:flex;gap:10px;align-items:center;background:var(--cd);border:1px solid var(--bd);border-radius:12px;padding:10px;margin-bottom:8px}
+.em{font-size:32px}.gr{flex:1;min-width:0}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:32px;height:32px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);cursor:pointer;font:inherit}
+.box{background:var(--cd);border:1px solid var(--bd);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px;margin:12px 0}
+.pv{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:700px){.pv{grid-template-columns:320px 1fr}}
+.big{font-size:110px;padding:30px 0;cursor:default}
+.lnk{background:none;border:0;color:var(--tx);cursor:pointer;padding:0 0 10px;font:inherit;text-decoration:underline}
+.badge{display:inline-block;padding:2px 10px;border-radius:12px;background:var(--bg);border:1px solid var(--bd);font-size:12px;font-weight:600}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:6px}
+.stat{background:var(--cd);border:1px solid var(--bd);border-radius:12px;padding:10px}
+.stat b{display:block;font-size:19px}
+.two{display:grid;gap:8px;grid-template-columns:1fr 1fr}
+.sp{display:flex;justify-content:space-between;gap:8px;align-items:center}
+h2{font-size:18px;margin:18px 0 8px}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:#1b1b1b;color:#fff;padding:10px 16px;border-radius:12px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20}
+#toast.on{opacity:1}
+.banner{background:linear-gradient(120deg,#fc0,#ffb100);color:#1b1b1b;border-radius:18px;padding:22px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.banner h1{margin:0 0 6px;font-size:22px;line-height:1.2}.banner p{margin:0;font-size:14px}
+.bi{font-size:64px;line-height:1}
+.shops{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.shop{background:var(--cd);border:1px solid var(--bd);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.ph{height:120px;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;font-size:48px}
+@media(min-width:700px){.ph{height:170px}}
+.si{padding:10px;display:flex;flex-direction:column;gap:8px;flex:1}
+.shop .btn{padding:9px 4px;font-size:14px;margin-top:0}
+.rx-row{display:flex;gap:6px;margin-top:auto}
+.rx{flex:1;border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:10px;padding:6px 2px;font:inherit;font-size:15px;cursor:pointer}
+.rx.on{background:var(--ac);border-color:var(--ac);color:#1b1b1b}
+h2[id]{scroll-margin-top:120px}
+:root{--bg:#f1f6f2;--cd:#fff;--tx:#10241a;--mu:#5d7266;--ac:#0e8f55;--on:#fff;--bd:#dbe6de;--er:#c93a3a}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1511;--cd:#14221b;--tx:#eaf4ee;--mu:#93a99b;--ac:#3ecf8e;--on:#06140d;--bd:#223a2d;--er:#ff7a7a}}
+:root[data-theme="dark"]{--bg:#0c1511;--cd:#14221b;--tx:#eaf4ee;--mu:#93a99b;--ac:#3ecf8e;--on:#06140d;--bd:#223a2d;--er:#ff7a7a}
+body{font-family:Manrope,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{background:var(--cd)}
+header{background:var(--cd);color:var(--tx);border-bottom:1px solid var(--bd)}
+.logo{color:var(--tx)}.logo b{background:var(--ac);color:var(--on);border-radius:8px;padding:1px 7px}
+#q{background:var(--bg);color:var(--tx);border:1px solid transparent;border-radius:12px}#q:focus{border-color:var(--ac);outline:0}
+nav a{color:var(--tx)}
+h1,h2{font-weight:800;letter-spacing:-.02em}
+.btn{background:var(--ac);color:var(--on);border-radius:12px}
+.btn.sec{background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
+.chip.on,.rx.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
+.card,.shop,.box,.row,.stat{border-radius:16px}
+.banner{background:linear-gradient(120deg,#0b7a49,#16a265 60%,#4cc36f);color:#fff;border-radius:22px;padding:26px 20px}
+.banner h1{font-size:24px}.banner p{opacity:.9}
+.steps{display:flex;gap:4px;margin:2px 0}.steps i{flex:1;height:6px;border-radius:3px;background:var(--bd)}.steps i.on{background:var(--ac)}
+main{padding-bottom:96px}
+#toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+#cb{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-width:560px;margin:auto;background:var(--tx);color:var(--cd);border-radius:16px;padding:14px 18px;display:none;justify-content:space-between;align-items:center;z-index:15;text-decoration:none;font-weight:700}
+#cb.on{display:flex}
+.shops{grid-template-columns:repeat(2,minmax(0,1fr))}
+.shop .si{flex:1}
+.shop .si>.sp{flex-wrap:nowrap}
+.shop .si>.sp b{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.shop .badge{flex:none;white-space:nowrap}
+.shop .si>.mu{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.8em}
+.shop .si>div:nth-last-child(2){margin-top:auto}
+.shop .btn,.rx{height:40px;padding:0 4px;display:flex;align-items:center;justify-content:center;margin-top:0}
+.rx-row .rx{flex:1 1 0;white-space:nowrap}
+.card .tt{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.8em}
+.card .mu{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--mu)}
+.dng{color:var(--er)}
+.demo{background:var(--bg);border:1px dashed var(--ac);border-radius:10px;padding:8px 10px;font-size:13px}
+nav{gap:10px;align-items:center}nav a{font-size:14px}
+.lg{display:flex;border:1px solid var(--bd);border-radius:10px;overflow:hidden}.lg button{border:0;background:none;color:var(--tx);padding:5px 9px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}.lg button.on{background:var(--ac);color:var(--on)}
+.kp{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}.kp .stat{min-width:0}.kp b{font-size:17px}
+.bars{display:flex;align-items:flex-end;gap:2px;height:110px}.bars i{flex:1;background:var(--ac);border-radius:3px 3px 0 0}
+.bl{display:flex;gap:2px;margin-top:4px}.bl span{flex:1;text-align:center;font-size:10px;color:var(--mu);white-space:nowrap}
+.hb{height:6px;border-radius:3px;background:var(--bd);margin:3px 0 8px}.hb i{display:block;height:100%;border-radius:3px;background:var(--ac)}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--mu)}.chk input{margin-top:2px}.chk a{color:var(--ac)}
+.rc{background:#fff;color:#111;max-width:380px;margin:12px auto;padding:18px;border-radius:12px;font-size:14px;display:flex;flex-direction:column;gap:6px}.rc hr{border:0;border-top:1px dashed #999;width:100%;margin:4px 0}.ctr{text-align:center}.rs{font-size:12px;color:#555}.qr{display:flex;justify-content:center;padding:6px}
+main{padding-bottom:24px}footer{max-width:1100px;margin:auto;padding:0 12px 110px;text-align:center;font-size:13px;color:var(--mu)}footer a{color:inherit}
+.tl{display:flex;gap:4px;margin-top:3px}.tl span{flex:1;font-size:11px;color:var(--mu);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tl span.on{color:var(--ac);font-weight:700}
+.badge.st0{background:#fff4d6;color:#8a5a00;border-color:#f3d48a}.badge.st1{background:#e3efff;color:#1f4fa0;border-color:#b9d1f5}.badge.st2{background:#efe6ff;color:#5a2fa0;border-color:#d3c1f5}.badge.st3{background:#dff5e8;color:#11683a;border-color:#a9dfbf}.badge.st4{background:#fde4e4;color:#a12a2a;border-color:#f2b5b5}
+.map{width:100%;height:190px;border:0;border-radius:12px;background:var(--bg);display:block}
+.geo{display:flex;gap:8px;align-items:stretch}.geo input{flex:1}.geo .btn{margin:0;white-space:nowrap}
+.km{display:flex;gap:6px;flex-wrap:wrap}.km span{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:5px 10px;font-size:13px}
+.addr{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}.addr a.chip{text-decoration:none;flex:none}
+header{box-shadow:0 2px 14px rgba(0,0,0,.05)}
+.card,.shop{transition:transform .15s,box-shadow .15s}@media(hover:hover){.card:hover,.shop:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.08)}}
+.btn{transition:filter .15s,transform .1s}.btn:active{filter:brightness(.92);transform:scale(.98)}
+.box{box-shadow:0 1px 3px rgba(0,0,0,.03)}
+.hero2{display:flex;gap:10px;margin:-4px 0 14px;flex-wrap:wrap}.hero2 span{background:var(--cd);border:1px solid var(--bd);border-radius:12px;padding:8px 12px;font-size:13px;font-weight:600}
+.shop.tap{cursor:pointer}
+#bn{position:fixed;left:0;right:0;bottom:0;z-index:16;background:var(--cd);border-top:1px solid var(--bd);display:flex;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));box-shadow:0 -4px 16px rgba(0,0,0,.05)}
+#bn a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;color:var(--mu);font-size:11px;font-weight:600;position:relative;padding:2px 0;min-width:0}
+#bn a .i{font-size:21px;line-height:1.1}#bn a.on{color:var(--ac)}
+#bn a .t{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#bn .bd{position:absolute;top:-2px;left:calc(50% + 6px);background:var(--er);color:#fff;border-radius:9px;font-size:10px;min-width:17px;height:17px;padding:0 4px;display:flex;align-items:center;justify-content:center}
+#bn .bd:empty{display:none}
+#cb{bottom:calc(72px + env(safe-area-inset-bottom,0px))!important}
+#toast{bottom:calc(140px + env(safe-area-inset-bottom,0px))!important}
+footer{padding-bottom:150px!important}
+.mi{display:flex;gap:10px;align-items:center;background:var(--cd);border:1px solid var(--bd);border-radius:16px;padding:10px;margin-bottom:8px}
+.mi .em{font-size:38px;width:54px;height:54px;display:flex;align-items:center;justify-content:center;background:var(--bg);border-radius:12px;cursor:pointer;flex:none}
+.mi .gr{cursor:pointer}.mi .mu{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.mi .btn{margin:0;padding:8px 12px;white-space:nowrap}
+.ct{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.ct button{background:var(--cd);border:1px solid var(--bd);border-radius:16px;padding:16px 10px;font:inherit;color:var(--tx);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px}
+.ct button .i{font-size:40px}.ct button b{font-size:15px}
+.gh{scroll-margin-top:130px}
+.sm{display:flex;gap:8px;flex-wrap:wrap}.sm .btn{flex:1;margin:0}
+.two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.two>*{min-width:0}label.f input,label.f select,.f input{width:100%;min-width:0}
+#toast{top:calc(74px + env(safe-area-inset-top,0px));bottom:auto!important;max-width:calc(100% - 32px);text-align:center;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+input.err,.chk.err{outline:2px solid var(--er);outline-offset:2px;border-radius:8px}.chk.err{color:var(--er)}
+/* ---- themes ---- */
+:root[data-skin="sun"]{--ac:#e8a600;--on:#1b1b1b;--g1:#f29c00;--g2:#ffc21a;--g3:#ffe27a;--bt:#1b1b1b;--lbg:#fbf8ef}
+:root[data-skin="sky"]{--ac:#2563eb;--on:#fff;--g1:#1e3a8a;--g2:#2563eb;--g3:#38bdf8;--lbg:#f2f6fc}
+:root[data-skin="anor"]{--ac:#c0264b;--on:#fff;--g1:#7f1232;--g2:#c0264b;--g3:#f2727a;--lbg:#fbf3f4}
+:root[data-skin="lav"]{--ac:#7c3aed;--on:#fff;--g1:#4c1d95;--g2:#7c3aed;--g3:#c4a1ff;--lbg:#f6f3fc}
+:root{--bg:var(--lbg,#f1f6f2)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1311;--cd:#191e1b;--bd:#2b322e;--tx:#eef2ef;--mu:#9ba59e}}
+:root[data-theme="dark"]{--bg:#0f1311;--cd:#191e1b;--bd:#2b322e;--tx:#eef2ef;--mu:#9ba59e}
+.banner{background:linear-gradient(120deg,var(--g1,#0b7a49),var(--g2,#16a265) 60%,var(--g3,#4cc36f));color:var(--bt,#fff)}
+.tb{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:3px 8px;cursor:pointer;font-size:16px;line-height:1.4}
+#sk{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:30;display:none;align-items:flex-end;justify-content:center}#sk.on{display:flex}
+#sk .pn{background:var(--cd);color:var(--tx);width:100%;max-width:520px;border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:12px}
+.sw{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.sw button{border:2px solid var(--bd);background:var(--bg);border-radius:14px;padding:8px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;font:inherit;font-size:11px;color:var(--tx);min-width:0}
+.sw button.on{border-color:var(--ac);font-weight:700}.sw i{width:30px;height:30px;border-radius:50%;display:block}
+/* ---- product photos ---- */
+.im.ph,.em.ph{background-size:cover;background-position:center}
+.im.ph{height:118px;padding:0}
+.bigph{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:18px;background:var(--bg);display:block}
+.gal{display:flex;gap:6px;margin-top:8px;overflow-x:auto}.gal img{width:62px;height:62px;object-fit:cover;border-radius:10px;border:2px solid transparent;cursor:pointer;flex:none}.gal img.on{border-color:var(--ac)}
+.pth{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.pth div{position:relative}.pth img{width:58px;height:58px;object-fit:cover;border-radius:10px;display:block}
+.pth button{position:absolute;top:-7px;right:-7px;width:22px;height:22px;border-radius:50%;border:0;background:var(--er);color:#fff;cursor:pointer;font-size:12px;line-height:1}
+.upl{display:inline-flex;align-items:center;gap:6px;border:1.5px dashed var(--ac);border-radius:10px;padding:9px 12px;cursor:pointer;font-size:13px;color:var(--ac);font-weight:700}.upl input{display:none}
+textarea.err{outline:2px solid var(--er);outline-offset:2px}
+#bn a{font-size:10.5px}
+@media print{#bn,#sk,header,#cb,footer,.noprint,#toast{display:none!important}body{background:#fff}.rc{margin:0 auto}}
+</style></head><body>
+<header><div class="top">
+<a class="logo" href="#home" onclick="S.q='';$('#q').value='';go('home');return false"><b>Савдо</b></a>
+<input id="q" placeholder="Искать магазины и товары" oninput="sq(this.value)">
+<nav><button class="tb" onclick="openSk()" aria-label="Тема" title="Тема">🎨</button><span class="lg"><button id="lr" onclick="setLg('ru')">Рус</button><button id="lt" onclick="setLg('tj')">Тоҷ</button></span><a href="#admin" id="adm" hidden>Панель</a><a href="#courier" id="crl" hidden title="Курьер">🛵</a></nav>
+</div></header>
+<main id="m"></main>
+<footer id="ft"></footer>
+<div id="toast"></div>
+<a id="cb" href="#cart"></a>
+<div id="sk" onclick="if(event.target===this)closeSk()"><div class="pn" id="skp"></div></div>
+<nav id="bn"><a href="#home" data-v="home"><span class="i">🏪</span><span class="t" id="b1">Магазины</span></a><a href="#cats" data-v="cats"><span class="i">🗂</span><span class="t" id="b2">Категории</span></a><a href="#srv" data-v="srv"><span class="i">🛠</span><span class="t" id="b4">Услуги</span></a><a href="#cart" data-v="cart"><span class="i">🛒</span><span class="bd" id="cn"></span><span class="t" id="b3">Корзина</span></a><a href="#orders" data-v="orders"><span class="i">📦</span><span class="t" id="n1">Заказы</span></a><a href="#login" data-v="login"><span class="i">👤</span><span class="t" id="acc">Войти</span></a></nav>
+<script>
+const $=s=>document.querySelector(s);
+const mem={};
+let LS=false;try{localStorage.setItem('mp2__t','1');localStorage.removeItem('mp2__t');LS=true}catch(e){}
+const store={get(k,d){if(k in mem)return mem[k];try{const v=localStorage.getItem('mp2_'+k);if(v)return JSON.parse(v)}catch(e){}return d},set(k,v){mem[k]=v;if(!LS)return true;try{localStorage.setItem('mp2_'+k,JSON.stringify(v));return true}catch(e){return false}}};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rub=n=>(Math.round(n*100)/100).toLocaleString('ru-RU')+' сомони';
+const ST=['Заявка отправлена','Курьер принял','Товар получен','Доставлен','Отменён'];
+const TLS=['Заявка','Курьер','Получен','Доставлен'];
+const stc=s=>'badge st'+Math.max(0,ST.indexOf(s));
+const lastTs=o=>o.hist&&o.hist.length?o.hist[o.hist.length-1].ts:o.ts;
+function tline(o){if(o.st===ST[4])return '';const k=ST.indexOf(o.st);return `<div class="steps">${TLS.map((s,i)=>`<i class="${i<=k?'on':''}"></i>`).join('')}</div><div class="tl">${TLS.map((s,i)=>`<span class="${i<=k?'on':''}">${s}</span>`).join('')}</div>`}
+const GC={lat:40.1265,lng:70.6250};
+const has=p=>!!p&&typeof p.lat==='number'&&typeof p.lng==='number'&&isFinite(p.lat)&&isFinite(p.lng);
+const hav=(a,b)=>{const r=Math.PI/180,x=Math.sin((b.lat-a.lat)*r/2)**2+Math.cos(a.lat*r)*Math.cos(b.lat*r)*Math.sin((b.lng-a.lng)*r/2)**2;return 12742*Math.asin(Math.sqrt(x))};
+async function roadKm(pts){pts=pts.filter(has);if(pts.length<2)return null;
+try{const c=new AbortController(),t=setTimeout(()=>c.abort(),6000);const r=await fetch('https://router.project-osrm.org/route/v1/driving/'+pts.map(p=>p.lng.toFixed(6)+','+p.lat.toFixed(6)).join(';')+'?overview=false',{signal:c.signal});clearTimeout(t);const j=await r.json();if(j.routes&&j.routes[0])return{km:j.routes[0].distance/1000,min:j.routes[0].duration/60,src:'road'}}catch(e){}
+let d=0;for(let i=1;i<pts.length;i++)d+=hav(pts[i-1],pts[i]);return{km:d*1.3,min:d*1.3/25*60,src:'est'}}
+function fee(km,sub){if(CFG.dFree>0&&sub>=CFG.dFree)return 0;if(km==null)return Math.round(Math.max(CFG.dMin,CFG.dBase));return Math.round(Math.max(CFG.dMin,CFG.dBase+CFG.dKm*km))}
+const gq=p=>p.lat.toFixed(6)+','+p.lng.toFixed(6);
+const gPin=p=>'https://www.google.com/maps/search/?api=1&query='+gq(p);
+function gDir(pts){pts=pts.filter(has);const w=pts.slice(1,-1);return 'https://www.google.com/maps/dir/?api=1&origin='+gq(pts[0])+'&destination='+gq(pts[pts.length-1])+(w.length?'&waypoints='+w.map(gq).join('%7C'):'')+'&travelmode=driving'}
+const gEmb=p=>`<iframe class="map" loading="lazy" title="map" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=${gq(p)}&z=16&output=embed"></iframe>`;
+const mlink=p=>has(p)?`<a class="chip" href="${gPin(p)}" target="_blank" rel="noopener">🗺 Карта</a>`:'';
+function geo(cb){if(!navigator.geolocation){toast('GPS недоступен на этом устройстве');return}toast('Определяем местоположение…');const ok=p=>cb({lat:p.coords.latitude,lng:p.coords.longitude}),bad=e=>toast(e.code===1?'Разрешите доступ к геолокации':'Не удалось определить место');navigator.geolocation.getCurrentPosition(ok,e=>e.code===1?bad(e):navigator.geolocation.getCurrentPosition(ok,bad,{enableHighAccuracy:false,timeout:10000,maximumAge:300000}),{enableHighAccuracy:true,timeout:12000,maximumAge:30000})}
+async function revGeo(p){try{const r=await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${p.lat}&lon=${p.lng}&accept-language=ru&zoom=18`);const j=await r.json(),a=j.address||{};return [a.city||a.town||a.village||'',a.road||'',a.house_number||''].filter(Boolean).join(', ')||j.display_name||null}catch(e){return null}}
+const kpi=(v,t)=>`<div class="stat"><b>${v}</b><span class="mu">${t}</span></div>`;
+const CATS=['Смартфоны','Ноутбуки','Наушники','Бытовая техника','Дом','Спорт','Книги','Растения','Продукты'];
+const SEED=[
+{id:1,t:'Смартфон Nova X 128 ГБ',c:'Смартфоны',p:29990,r:4.7,n:812,e:'📱',s:'TechStore',st:25,d:'Экран AMOLED 6,4 дюйма, камера 50 Мп, аккумулятор 5000 мА·ч.'},
+{id:2,t:'Смартфон Orbit S 256 ГБ',c:'Смартфоны',p:54990,r:4.8,n:420,e:'📲',s:'TechStore',st:12,d:'Флагманский процессор, быстрая зарядка 65 Вт, защита от воды.'},
+{id:3,t:'Ноутбук AirBook 14',c:'Ноутбуки',p:69990,r:4.6,n:233,e:'💻',s:'TechStore',st:9,d:'14 дюймов, 16 ГБ памяти, SSD 512 ГБ, до 12 часов работы.'},
+{id:4,t:'Игровой ноутбук Titan 16',c:'Ноутбуки',p:119990,r:4.5,n:97,e:'🖥️',s:'TechStore',st:4,d:'Дискретная видеокарта, экран 165 Гц, усиленное охлаждение.'},
+{id:5,t:'Наушники Pulse TWS',c:'Наушники',p:4990,r:4.4,n:1530,e:'🎧',s:'TechStore',st:60,d:'Беспроводные, шумоподавление, 28 часов с кейсом.'},
+{id:6,t:'Наушники Studio Pro',c:'Наушники',p:12990,r:4.9,n:310,e:'🎵',s:'TechStore',st:15,d:'Полноразмерные, студийный звук, съёмный кабель.'},
+{id:7,t:'Робот-пылесос CleanBot',c:'Бытовая техника',p:18990,r:4.5,n:640,e:'🤖',s:'HomeHub',st:18,d:'Влажная и сухая уборка, построение карты, управление с телефона.'},
+{id:8,t:'Кофемашина Barista 15 бар',c:'Бытовая техника',p:24990,r:4.6,n:288,e:'☕',s:'HomeHub',st:10,d:'Капучинатор, два режима помола, бак на 1,8 л.'},
+{id:9,t:'Мультиварка Chef 5 л',c:'Бытовая техника',p:5990,r:4.3,n:905,e:'🍲',s:'HomeHub',st:30,d:'45 программ, отложенный старт, антипригарная чаша.'},
+{id:10,t:'Умная лампа Lumi RGB',c:'Дом',p:1290,r:4.2,n:2100,e:'💡',s:'HomeHub',st:80,d:'16 млн цветов, управление голосом и через приложение.'},
+{id:11,t:'Комплект постельного белья',c:'Дом',p:2490,r:4.7,n:760,e:'🛏️',s:'HomeHub',st:40,d:'Сатин, 100% хлопок, размер «евро».'},
+{id:12,t:'Электрочайник Glass 1,7 л',c:'Бытовая техника',p:1990,r:4.5,n:1180,e:'🫖',s:'HomeHub',st:55,d:'Стеклянная колба, подсветка, автоотключение.'},
+{id:13,t:'Гантели наборные 20 кг',c:'Спорт',p:3490,r:4.6,n:210,e:'🏋️',s:'СпортМир',st:20,d:'Разборные, обрезиненные диски, хват с накаткой.'},
+{id:14,t:'Коврик для йоги 6 мм',c:'Спорт',p:1190,r:4.5,n:530,e:'🧘',s:'СпортМир',st:45,d:'Нескользящее покрытие, чехол в комплекте.'},
+{id:15,t:'Роман «Тихая гавань»',c:'Книги',p:590,r:4.8,n:96,e:'📖',s:'Книжный дом',st:70,d:'Твёрдый переплёт, 380 страниц.'},
+{id:16,t:'Набор блокнотов А5',c:'Книги',p:690,r:4.4,n:140,e:'📓',s:'Книжный дом',st:90,d:'Три блокнота в клетку, плотная бумага.'},
+{id:17,t:'Монстера в горшке',c:'Растения',p:1490,r:4.7,n:88,e:'🌿',s:'Зелёный уголок',st:14,d:'Высота около 50 см, горшок в комплекте.'},
+{id:18,t:'Набор для ухода за растениями',c:'Растения',p:990,r:4.3,n:61,e:'🪴',s:'Зелёный уголок',st:30,d:'Опрыскиватель, лейка и удобрение.'},
+{id:19,t:'Кофе в зёрнах 1 кг',c:'Продукты',p:1390,r:4.6,n:420,e:'🫘',s:'Вкусная корзина',st:60,d:'Арабика, средняя обжарка.'},
+{id:20,t:'Набор чая «Ассорти»',c:'Продукты',p:790,r:4.5,n:300,e:'🍵',s:'Вкусная корзина',st:80,d:'Двадцать пакетиков, пять вкусов.'}];
+const SEEDU=[{email:'buyer@demo',name:'Анна',role:'buyer',addr:'Исфара, ул. Ленина, 1'},{email:'courier@demo',name:'Фаррух',role:'courier'},{email:'tech@demo',name:'TechStore',role:'seller',shop:'TechStore'},{email:'home@demo',name:'HomeHub',role:'seller',shop:'HomeHub'},{email:'admin@demo',name:'Админ',role:'admin'}];
+const SEEDSH=[{name:'TechStore',e:'🔌',g:'#ffe27a,#f4a300',d:'Смартфоны, ноутбуки и наушники.'},{name:'HomeHub',e:'🏠',g:'#bfe3d0,#5fb88a',d:'Техника и вещи для дома.'},{name:'СпортМир',e:'🏃',g:'#cfe0ff,#6d9bff',d:'Всё для тренировок и активного отдыха.'},{name:'Книжный дом',e:'📚',g:'#f5d6c6,#e2825a',d:'Книги, канцелярия, подарки.'},{name:'Зелёный уголок',e:'🪴',g:'#d6efb8,#8bc34a',d:'Комнатные растения и уход за ними.'},{name:'Вкусная корзина',e:'🧺',g:'#ffd5d5,#ef7b7b',d:'Чай, кофе, сладости и продукты.'}];
+const SEEDR={TechStore:{a:'love',b:'love',c:'like',d:'like',e:'dislike'},HomeHub:{a:'like',b:'like',c:'love'},'СпортМир':{a:'like',b:'like',c:'like',d:'love'},'Книжный дом':{a:'love',b:'like'},'Зелёный уголок':{a:'like',b:'dislike'},'Вкусная корзина':{a:'love',b:'love',c:'like',d:'like',e:'like',f:'love'}};
+const SEEDRV=[{s:'TechStore',n:'Анна',e:'buyer@demo',t:'Быстро привезли, всё как в описании.',d:'03.11.2026'}];
+const SEEDO=[{id:1001,b:'buyer@demo',bn:'Анна',items:[{id:5,t:'Наушники Pulse TWS',p:4990,q:1,s:'TechStore'},{id:10,t:'Умная лампа Lumi RGB',p:1290,q:2,s:'HomeHub'}],total:7570,addr:'Исфара, ул. Ленина, 1',st:'Собран',d:'03.11.2026'}];
+const SCATS=['Ремонт дома','Электрик','Сантехник','Бытовая техника','Компьютеры'];
+const SCE={'Ремонт дома':'🔨','Электрик':'💡','Сантехник':'🚿','Бытовая техника':'🧊','Компьютеры':'💻'};
+const SEEDSV=[{id:1,c:'Ремонт дома',n:'Устои Бахтиёр',ph:'+992 92 100 20 30',p:100,u:'за выезд',d:'Штукатурка, плитка, покраска, ремонт квартиры под ключ.',e:'👷'},
+{id:2,c:'Ремонт дома',n:'Бригада «Хонаи нав»',ph:'+992 93 200 30 40',p:150,u:'за осмотр',d:'Ремонт домов и квартир, кровля, полы, окна и двери.',e:'🏗️'},
+{id:3,c:'Электрик',n:'Электрик Фирдавс',ph:'+992 90 300 40 50',p:50,u:'за выезд',d:'Проводка, розетки, автоматы, люстры, счётчики.',e:'⚡'},
+{id:4,c:'Сантехник',n:'Сантехник Шерзод',ph:'+992 91 400 50 60',p:50,u:'за выезд',d:'Трубы, смесители, бойлеры, засоры, установка сантехники.',e:'🔧'},
+{id:5,c:'Бытовая техника',n:'Сервис «Барқ»',ph:'+992 92 500 60 70',p:70,u:'диагностика',d:'Ремонт холодильников, стиральных машин, плит и кондиционеров.',e:'🧰'},
+{id:6,c:'Компьютеры',n:'КомпМастер Исфара',ph:'+992 93 600 70 80',p:60,u:'диагностика',d:'Ремонт ноутбуков и ПК, установка Windows, чистка, ремонт телефонов.',e:'🖥️'},
+{id:7,c:'Компьютеры',n:'IT-помощь на дому',ph:'+992 90 700 80 90',p:40,u:'за выезд',d:'Настройка интернета и Wi‑Fi, принтеров, установка программ.',e:'🛜'}];
+const SST=['Заявка отправлена','Мастер принял','Выполнено','Отменён'];
+let SV=store.get('sv',SEEDSV),SQ=store.get('sq',[]),SK=store.get('skin','green'),MD=store.get('mode','auto');
+let P=store.get('p',SEED),O=store.get('o',SEEDO),C=store.get('c',{}),U=store.get('u',null),USERS=store.get('us',SEEDU),SH=store.get('sh',SEEDSH),R=store.get('r',SEEDR),RV=store.get('rv',SEEDRV),ORD=store.get('ord',null);
+let CFG=store.get('cfg',{name:'Савдо',city:'Исфара',com:5,legal:'',inn:'',phone:'',addr:''}),LG=store.get('lg','ru'),QRT='';
+CFG=Object.assign({dBase:5,dKm:2,dMin:7,dFree:0},CFG);
+let S={q:'',cat:'Все',sort:'pop',min:'',max:'',pid:null,shop:null,tab:'in',at:'shops',cf:null,per:30,as:null,ast:'an',rs:'',v:'home'};
+const save=()=>{const ok=[['p',P],['o',O],['c',C],['u',U],['us',USERS],['sh',SH],['r',R],['rv',RV],['ord',ORD],['cfg',CFG],['sv',SV],['sq',SQ]].map(([k,v])=>store.set(k,v)).every(Boolean);if(!ok)setTimeout(()=>toast('Память браузера заполнена — удалите лишние фото.'),50);return ok};
+let tt;const toast=m=>{const t=$('#toast');t.textContent=tr(m);t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),1800)};
+const find=id=>P.find(x=>x.id==id);
+function show(v){if(S.v&&S.v!==v&&S.v!=='receipt')S.prev=S.v;S.v=v||'home';S.pid=null;S.shop=null;if(S.v!=='cats')S.cc=null;if(S.v!=='srv')S.sid=null;draw();try{scrollTo(0,0)}catch(e){}}
+function route(){let h='';try{h=location.hash.slice(1)}catch(e){}show(h)}
+addEventListener('popstate',route);
+function go(v){show(v);try{history.pushState(null,'','#'+v)}catch(e){}}
+document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;e.preventDefault();go(a.getAttribute('href').slice(1)||'home')});
+function sq(v){S.q=v;S.pid=null;S.shop=null;if(S.v!=='home')go('home');else draw()}
+function draw(){
+$('#cn').textContent=Object.values(C).reduce((a,b)=>a+b,0)||'';
+document.documentElement.lang=LG==='tj'?'tg':'ru';document.title=CFG.name+' · '+CFG.city;$('.logo').innerHTML='<b>'+esc(CFG.name)+'</b>';
+$('#q').placeholder=tr('Искать магазины и товары');$('#n1').textContent=tr('Заказы');$('#adm').textContent=tr('Панель');$('#lr').classList.toggle('on',LG==='ru');$('#lt').classList.toggle('on',LG==='tj');
+$('#acc').textContent=U?U.name:tr('Войти');['b1','b2','b3','b4','n1'].forEach((k,i)=>$('#'+k).textContent=(LG==='tj'?['Мағоза','Категория','Сабад','Хизмат','Фармоиш']:['Магазины','Категории','Корзина','Услуги','Заказы'])[i]);applyTheme();const av=S.shop||S.pid?'':S.v;document.querySelectorAll('#bn a').forEach(a=>a.classList.toggle('on',a.dataset.v===av||(a.dataset.v==='home'&&(S.shop||S.v==='home'))));
+const cn=Object.values(C).reduce((a,b)=>a+b,0),sum=Object.keys(C).reduce((a,id)=>{const x=find(id);return a+(x?x.p*C[id]:0)},0),cb=$('#cb');
+$('#adm').hidden=!(U&&U.role==='admin');$('#crl').hidden=!(U&&U.role==='courier');cb.classList.toggle('on',cn>0&&!!(S.shop||S.pid||S.v==='cats'));cb.innerHTML=`<span>🛒 Корзина · ${cn} · ${rub(sum)}</span><span>Оформить →</span>`;
+const v={home,cart,orders,seller,login,admin,receipt,terms,courier,cats,srv}[S.v]||home;
+$('#m').innerHTML=S.pid?prod():S.shop?shopPage():v();post()}
+const card=x=>`<div class="card"><div class="im${pim(x)?' ph':''}"${pbg(pim(x))} onclick="openP(${x.id})">${pim(x)?'':x.e}</div><div class="pr">${rub(x.p)}</div><div class="tt" onclick="openP(${x.id})">${esc(x.t)}</div><div class="mu">${x.n?'★ '+x.r+' · '+x.n+' отзывов':'Новинка'}</div><div class="mu">${esc(x.s)}</div><button class="btn" ${x.st?'':'disabled'} onclick="add(${x.id})">${x.st?'В корзину':'Нет в наличии'}</button></div>`;
+const E=n=>encodeURIComponent(n).replace(/'/g,'%27');
+const EM={love:'❤️',like:'👍',dislike:'👎'},W={love:5,like:4,dislike:1};
+const shopOf=n=>SH.find(s=>s.name===n);
+const GID=store.get('gid',null)||(()=>{const g='g'+Math.random().toString(36).slice(2,9);store.set('gid',g);return g})();
+const vk=()=>U?U.email:GID;
+function stat(n){const v=Object.values(R[n]||{}),c={love:0,like:0,dislike:0};v.forEach(x=>c[x]++);return{c,n:v.length,r:(v.reduce((a,x)=>a+W[x],0)+12)/(v.length+3)}}
+const byRate=(a,b)=>stat(b.name).r-stat(a.name).r||stat(b.name).n-stat(a.name).n;
+function shops(){const q=S.q.toLowerCase();const a=SH.filter(s=>(S.cat==='Все'||P.some(x=>x.s===s.name&&x.c===S.cat))&&(!q||s.name.toLowerCase().includes(q)||P.some(x=>x.s===s.name&&x.t.toLowerCase().includes(q))));return ORD?a.sort((x,y)=>ORD.indexOf(x.name)-ORD.indexOf(y.name)):a.sort(byRate)}
+function move(n,d){n=decodeURIComponent(n);if(!ORD)ORD=SH.slice().sort(byRate).map(s=>s.name);SH.forEach(s=>{if(!ORD.includes(s.name))ORD.push(s.name)});const i=ORD.indexOf(n),j=i+d;if(j<0||j>=ORD.length)return;[ORD[i],ORD[j]]=[ORD[j],ORD[i]];save();draw()}
+const ph=s=>`<div class="ph" style="${s.photo?`background-image:url(${s.photo})`:`background:linear-gradient(135deg,${s.g||'#ffe27a,#ffb703'})`}">${s.photo?'':`<span>${s.e||'🏪'}</span>`}</div>`;
+function rx(n){const st=stat(n),me=(R[n]||{})[vk()],e=E(n);return `<div class="rx-row">${[['like','👍'],['love','❤️'],['dislike','👎']].map(([k,m])=>`<button class="rx ${me===k?'on':''}" onclick="event.stopPropagation();vote('${e}','${k}')" aria-label="Оценить магазин">${m} ${st.c[k]}</button>`).join('')}</div>`}
+function vote(n,k){n=decodeURIComponent(n);if(U&&U.shop===n){toast('Свой магазин оценивать нельзя');return}const u=vk();R[n]=R[n]||{};if(R[n][u]===k)delete R[n][u];else R[n][u]=k;save();draw()}
+function shopCard(s,i,t){const st=stat(s.name),ad=U&&U.role==='admin'&&!S.q&&S.cat==='Все',e=E(s.name);
+const np=P.filter(x=>x.s===s.name).length;
+return `<div class="shop tap" role="button" tabindex="0" onclick="openS('${e}','p')" onkeydown="if(event.key==='Enter')openS('${e}','p')">${ph(s)}<div class="si"><div class="sp"><b class="tt">${esc(s.name)}</b><span class="badge">${st.n?'★ '+st.r.toFixed(1):'Нет оценок'}</span></div><div class="mu">${esc(s.d||'')}</div>${ad?`<div class="two"><button class="btn sec" onclick="event.stopPropagation();move('${e}',-1)" ${i?'':'disabled'}>↑ Выше</button><button class="btn sec" onclick="event.stopPropagation();move('${e}',1)" ${i<t-1?'':'disabled'}>↓ Ниже</button></div>`:''}<div class="two"><button class="btn" onclick="event.stopPropagation();openS('${e}','p')" title="${np}">🛒 Меню</button><button class="btn sec" onclick="event.stopPropagation();openS('${e}','r')">Отзыв</button></div>${rx(s.name)}</div></div>`}
+function home(){const a=shops(),ad=U&&U.role==='admin';
+return `<div class="banner"><div><h1>Рынок Исфары у вас в телефоне</h1><p>Выбирайте магазины города. Курьер заберёт заказ и привезёт к вам домой.</p></div><div class="bi">🛵</div></div><div class="hero2"><span>📍 Доставка по GPS</span><span>🛣 Цена по расстоянию</span><span>👀 Статус заказа онлайн</span></div>${ad?`<div class="sp mu" style="margin-bottom:8px"><span>Админ: порядок ${ORD?'задан вручную':'по рейтингу'}</span>${ORD?'<button class="btn sec" onclick="ORD=null;save();draw()">Вернуть по рейтингу</button>':''}</div>`:''}<div class="chips">${['Все',...CATS.filter(c=>P.some(x=>x.c===c))].map(c=>`<button class="chip ${c===S.cat?'on':''}" onclick="setCat('${E(c)}')">${c}</button>`).join('')}</div><div class="shops">${a.map((s,i)=>shopCard(s,i,a.length)).join('')||'<p class="mu">Магазины не найдены. Измените запрос.</p>'}</div>`}
+function setCat(c){S.cat=decodeURIComponent(c);draw()}
+function openS(n,sec){S.shop=decodeURIComponent(n);S.sec=sec==='r'?'r':'p';S.pid=null;draw();scrollTo(0,0)}
+const ctl=x=>!x.st?'<span class="mu">Нет в наличии</span>':C[x.id]?`<div class="qty"><button onclick="qty(${x.id},-1)" aria-label="Меньше">−</button><b>${C[x.id]}</b><button onclick="qty(${x.id},1)" aria-label="Больше">+</button></div>`:`<button class="btn" onclick="add(${x.id})">+ Добавить</button>`;
+const mi=x=>`<div class="mi"><span class="em${pim(x)?' ph':''}"${pbg(pim(x))} onclick="openP(${x.id})">${pim(x)?'':x.e}</span><div class="gr" onclick="openP(${x.id})"><div class="tt" style="min-height:0">${esc(x.t)}</div><div class="mu">${esc(x.d)}</div><b>${rub(x.p)}</b></div>${ctl(x)}</div>`;
+function jump(i){const el=document.getElementById('g'+i);if(el)el.scrollIntoView({behavior:'smooth'})}
+function shopPage(){const s=shopOf(S.shop);if(!s){S.shop=null;return home()}
+const st=stat(s.name),r=S.sec==='r',a=P.filter(x=>x.s===s.name).sort({asc:(a,b)=>a.p-b.p,desc:(a,b)=>b.p-a.p}[S.sort]||((a,b)=>b.n-a.n)),rv=RV.filter(r=>r.s===s.name),gs=CATS.filter(c=>a.some(x=>x.c===c)),e=E(s.name);
+const head=`<button class="lnk" onclick="S.shop=null;draw();scrollTo(0,0)">← Все магазины</button><div class="shop" style="margin-bottom:12px">${ph(s)}<div class="si"><div class="sp"><h1 style="margin:0">${esc(s.name)}</h1><span class="badge">${st.n?'★ '+st.r.toFixed(1)+' · '+st.n+' оценок':'Нет оценок'}</span></div><div class="mu">${esc(s.d||'')}</div>${s.addr||has(s)?`<div class="addr"><span class="mu">📍 ${esc(s.addr||'Адрес не указан')}</span>${mlink(s)}</div>`:''}${rx(s.name)}<div class="chips" style="padding:0"><button class="chip ${r?'':'on'}" onclick="S.sec='p';draw()">🛒 Меню · ${a.length}</button><button class="chip ${r?'on':''}" onclick="S.sec='r';draw()">💬 Отзывы · ${rv.length}</button></div></div></div>`;
+if(r)return head+`<div class="box"><textarea id="rt" rows="3" placeholder="Что вы думаете о магазине?"></textarea><button class="btn" onclick="addRv()">Оставить отзыв</button></div>${rv.map(r=>`<div class="row"><div class="gr"><b>${esc(r.n)}</b> ${EM[(R[r.s]||{})[r.e]]||''} <span class="mu">${r.d}</span><div>${esc(r.t)}</div></div></div>`).join('')||'<p class="mu">Отзывов пока нет. Напишите первый.</p>'}`;
+return head+`<div class="sp"><div class="chips" style="padding:0;flex:1">${gs.map((c,i)=>`<button class="chip" onclick="jump(${i})">${c}</button>`).join('')}</div><select onchange="S.sort=this.value;draw()">${[['pop','Популярные'],['asc','Дешевле'],['desc','Дороже']].map(o=>`<option value="${o[0]}" ${S.sort===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select></div>${gs.map((c,i)=>`<h2 class="gh" id="g${i}">${c} · ${a.filter(x=>x.c===c).length}</h2>${a.filter(x=>x.c===c).map(mi).join('')}`).join('')||'<p class="mu">В магазине пока нет товаров.</p>'}`}
+const CE={'Смартфоны':'📱','Ноутбуки':'💻','Наушники':'🎧','Бытовая техника':'🔌','Дом':'🏠','Спорт':'🏋️','Книги':'📚','Растения':'🪴','Продукты':'🧺'};
+function cats(){const cs=CATS.filter(c=>P.some(x=>x.c===c));
+if(!S.cc||!cs.includes(S.cc))return `<h1>Категории</h1><div class="ct">${cs.map(c=>`<button onclick="S.cc=decodeURIComponent('${E(c)}');draw();scrollTo(0,0)"><span class="i">${CE[c]||'📦'}</span><b>${c}</b><span class="mu">${P.filter(x=>x.c===c).length} товаров</span></button>`).join('')}</div>`;
+const a=P.filter(x=>x.c===S.cc).sort({asc:(a,b)=>a.p-b.p,desc:(a,b)=>b.p-a.p}[S.sort]||((a,b)=>b.n-a.n)),ss=[...new Set(a.map(x=>x.s))];
+return `<button class="lnk" onclick="S.cc=null;draw()">← Все категории</button><div class="sp"><h1 style="margin:0">${CE[S.cc]||''} ${S.cc}</h1><select onchange="S.sort=this.value;draw()">${[['pop','Популярные'],['asc','Дешевле'],['desc','Дороже']].map(o=>`<option value="${o[0]}" ${S.sort===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select></div><div class="chips" style="margin-top:10px">${cs.map(c=>`<button class="chip ${c===S.cc?'on':''}" onclick="S.cc=decodeURIComponent('${E(c)}');draw()">${c}</button>`).join('')}</div>${ss.map(n=>`<h2>🏪 ${esc(n)}</h2>${a.filter(x=>x.s===n).map(mi).join('')}`).join('')}`}
+function addRv(){if(!U){toast('Войдите, чтобы оставить отзыв');S.next='home';S.step=1;go('login');return}const t=$('#rt').value.trim();if(!t){toast('Напишите текст отзыва');return}RV.unshift({s:S.shop,n:U.name,e:U.email,t,d:new Date().toLocaleDateString('ru-RU')});save();toast('Отзыв опубликован');draw()}
+function photo(inp,n){const f=inp.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const w=Math.min(600,im.width),h=Math.round(im.height*w/im.width),c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(im,0,0,w,h);shopOf(n||U.shop).photo=c.toDataURL('image/jpeg',.75);save();toast('Фото обновлено');draw()};im.src=rd.result};rd.readAsDataURL(f)}
+function openP(id){S.pid=id;S.gi=0;draw();scrollTo(0,0)}
+const SKINS=[['green','Зелёная','#0e8f55'],['sun','Солнечная','#e8a600'],['sky','Небесная','#2563eb'],['anor','Гранатовая','#c0264b'],['lav','Лавандовая','#7c3aed']];
+function applyTheme(){const r=document.documentElement;if(SK&&SK!=='green')r.setAttribute('data-skin',SK);else r.removeAttribute('data-skin');if(MD==='light'||MD==='dark')r.setAttribute('data-theme',MD);else r.removeAttribute('data-theme')}
+function skHtml(){return `<div class="sp"><b>Тема</b><button class="lnk" style="padding:0" onclick="closeSk()">✕</button></div><div class="sw">${SKINS.map(s=>`<button class="${SK===s[0]?'on':''}" onclick="setSk('${s[0]}')"><i style="background:${s[2]}"></i>${s[1]}</button>`).join('')}</div><b>Режим</b><div class="chips" style="padding:0">${[['auto','Авто'],['light','☀️ Светлый'],['dark','🌙 Тёмный']].map(m=>`<button class="chip ${MD===m[0]?'on':''}" onclick="setMd('${m[0]}')">${m[1]}</button>`).join('')}</div><button class="btn" onclick="closeSk()">Готово</button>`}
+function openSk(){const p=$('#skp');p.innerHTML=skHtml();if(LG==='tj')tx(p);$('#sk').classList.add('on')}
+function closeSk(){$('#sk').classList.remove('on')}
+function setSk(k){SK=k;store.set('skin',k);applyTheme();openSk();draw()}
+function setMd(k){MD=k;store.set('mode',k);applyTheme();openSk();draw()}
+const pim=x=>x&&x.ph&&x.ph.length?x.ph[0]:null;
+const pbg=u=>u?` style="background-image:url('${u}')"`:'';
+function shrink(f,w){return new Promise(res=>{const rd=new FileReader();rd.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,w/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.72))};im.onerror=()=>res(null);im.src=rd.result};rd.onerror=()=>res(null);rd.readAsDataURL(f)})}
+async function addPh(id,inp){const x=find(id);if(!x||!inp.files.length)return;x.ph=x.ph||[];const fs=[...inp.files].slice(0,4-x.ph.length);if(inp.files.length>fs.length)toast('Можно до 4 фото');for(const f of fs){const u=await shrink(f,700);if(u)x.ph.push(u)}if(save())toast('Фото добавлено');draw()}
+function delPh(id,i){const x=find(id);if(!x||!x.ph)return;x.ph.splice(i,1);save();draw()}
+const phEdit=x=>`<div class="pth">${(x.ph||[]).map((u,i)=>`<div><img src="${u}" alt=""><button onclick="delPh(${x.id},${i})" aria-label="Удалить фото">✕</button></div>`).join('')}${(x.ph||[]).length<4?`<label class="upl">📷 Фото<input type="file" accept="image/*" multiple onchange="addPh(${x.id},this)"></label>`:''}</div>`;
+/* ---------- services ---------- */
+const tel=s=>'tel:'+String(s||'').replace(/[^+\d]/g,'');
+const sstc=s=>'badge st'+([0,1,3,4][SST.indexOf(s)]||0);
+const gf=()=>U?'':`<div class="two"><input id="gp" type="tel" inputmode="tel" placeholder="Телефон" value="${esc(S.gp||'')}" oninput="S.gp=this.value;this.classList.remove('err')"><input id="gn" placeholder="Ваше имя" value="${esc(S.gn||'')}" oninput="S.gn=this.value"></div>`;
+function guestUser(ph){let u=USERS.find(x=>x.email===ph);if(!u){u={email:ph,name:(($('#gn')||{}).value||'').trim()||'Клиент '+ph.slice(-4),role:'buyer'};USERS.push(u)}return u}
+const svCard=s=>`<div class="box"><div class="mi" style="border:0;padding:0;margin:0;box-shadow:none"><span class="em${s.photo?' ph':''}"${pbg(s.photo)}>${s.photo?'':s.e||'🛠'}</span><div class="gr" style="cursor:default"><b>${esc(s.n)}</b><div class="mu">${SCE[s.c]||'🛠'} ${s.c}</div><div><b>от ${rub(s.p)}</b> <span class="mu">${esc(s.u||'')}</span></div></div></div><div class="mu">${esc(s.d||'')}</div><div class="sm">${s.ph?`<a class="btn sec" href="${tel(s.ph)}">📞 Позвонить</a>`:''}<button class="btn" onclick="S.sid=${s.id};draw();scrollTo(0,0)">🛠 Вызвать мастера</button></div></div>`;
+function srv(){if(S.sid)return srvForm();const a=SV.filter(s=>!S.sc||s.c===S.sc);
+return `<div class="banner"><div><h1>Мастера Исфары</h1><p>Ремонт дома, электрик, техника и компьютеры — вызовите мастера на дом.</p></div><div class="bi">🛠</div></div><div class="chips"><button class="chip ${S.sc?'':'on'}" onclick="S.sc=null;draw()">Все</button>${SCATS.map(c=>`<button class="chip ${S.sc===c?'on':''}" onclick="S.sc=decodeURIComponent('${E(c)}');draw()">${SCE[c]} ${c}</button>`).join('')}</div>${a.map(svCard).join('')||'<p class="mu">Мастеров пока нет.</p>'}`}
+function srvForm(){const s=SV.find(x=>x.id===S.sid);if(!s){S.sid=null;return srv()}
+if(S.ad==null)S.ad=U&&U.addr||'';if(!has(S.dl)&&U&&has(U.loc))S.dl=U.loc;
+return `<button class="lnk" onclick="S.sid=null;draw()">← Все мастера</button><h1>Вызов мастера</h1><div class="box"><div class="sp"><b>${s.e||'🛠'} ${esc(s.n)}</b><span class="badge">${SCE[s.c]||''} ${s.c}</span></div><div class="mu">от ${rub(s.p)} ${esc(s.u||'')} · окончательную цену мастер назовёт после осмотра</div></div>
+<div class="box"><b>Что случилось?</b><textarea id="st" rows="3" placeholder="Опишите проблему: например, не работает розетка на кухне" oninput="S.st=this.value;this.classList.remove('err')">${esc(S.st||'')}</textarea>
+<label class="f">Когда удобно<select id="sw" onchange="S.sw=this.value">${['Как можно скорее','Сегодня','Завтра','В выходные'].map(w=>`<option value="${w}" ${S.sw===w?'selected':''}>${w}</option>`).join('')}</select></label>
+<div class="geo"><input id="ad" placeholder="Адрес" value="${esc(S.ad)}" oninput="S.ad=this.value;this.classList.remove('err')"><button class="btn sec" onclick="geoCart()">📍 GPS</button></div>${has(S.dl)?gEmb(S.dl):''}${gf()}
+<label class="chk" id="tml"><input type="checkbox" id="tm" ${S.tm?'checked':''} onchange="S.tm=this.checked;this.parentNode.classList.remove('err')"><span>Согласен с <a href="#terms">условиями и политикой конфиденциальности</a></span></label><button class="btn" onclick="srvOrder()">Отправить заявку</button></div>`}
+function srvOrder(){const s=SV.find(x=>x.id===S.sid);if(!s)return;const t=$('#st').value.trim();if(!t){bad('st','Опишите проблему');return}
+const ad=$('#ad').value.trim();if(!ad){bad('ad','Укажите адрес');return}
+let ph=null;if(!U){ph=normP($('#gp').value);if(!ph){bad('gp','Введите номер телефона, например 92 123 45 67');return}}
+if(!$('#tm').checked){bad('tml','Подтвердите согласие с условиями');return}
+if(!U)U=guestUser(ph);const now=Date.now();
+SQ.unshift({id:Math.max(5000,...SQ.map(q=>q.id))+1,sid:s.id,sn:s.n,c:s.c,b:U.email,bn:U.name,addr:ad,loc:has(S.dl)?S.dl:null,t,w:$('#sw').value,st:SST[0],hist:[{st:SST[0],ts:now}],ts:now,d:new Date().toLocaleDateString('ru-RU')});
+U.addr=ad;if(has(S.dl))U.loc=S.dl;S.st='';S.sid=null;S.tm=false;S.gp='';S.gn='';S.ot='srv';save();toast('Заявка отправлена');go('orders')}
+function setSq(id,v){const q=SQ.find(x=>x.id==id);if(!q||q.st===v)return;q.st=v;(q.hist=q.hist||[]).push({st:v,ts:Date.now()});save();draw()}
+function sqCard(q,adm){const s=SV.find(x=>x.id===q.sid)||{};return `<div class="box"><div class="sp"><b>${SCE[q.c]||'🛠'} ${esc(q.sn)}</b><span class="${sstc(q.st)}">${q.st}</span></div><div class="mu">№${q.id} · ${q.d} · ${esc(q.w||'')}</div><div>${esc(q.t)}</div><div class="addr"><span class="mu">📍 ${esc(q.addr)}${adm?' · '+esc(q.bn)+' · '+esc(fmtP(q.b)):''}</span>${mlink(q.loc)}</div>
+${adm?`<div class="two"><select onchange="setSq(${q.id},this.value)">${SST.map(x=>`<option value="${x}" ${x===q.st?'selected':''}>${x}</option>`).join('')}</select>${s.ph?`<a class="btn sec" style="margin:0" href="${tel(s.ph)}">📞 Мастер</a>`:'<span></span>'}</div>`:`<div class="sm">${s.ph&&q.st!==SST[3]?`<a class="btn sec" href="${tel(s.ph)}">📞 Позвонить мастеру</a>`:''}${q.st===SST[0]?`<button class="btn sec" onclick="setSq(${q.id},'${SST[3]}')">Отменить заявку</button>`:''}</div>`}</div>`}
+function addSv(){const g=i=>$('#'+i).value.trim(),n=g('vn'),ph=g('vp');if(!n||!ph){toast('Укажите имя и телефон');return}SV.push({id:Math.max(0,...SV.map(s=>s.id))+1,c:$('#vc').value,n,ph,p:Math.max(0,Math.round(+g('vr')||0)),u:g('vu')||'за выезд',d:g('vd'),e:SCE[$('#vc').value]||'🛠'});save();toast('Мастер добавлен');draw()}
+function svSet(id,k,v){const s=SV.find(x=>x.id===id);if(!s)return;s[k]=k==='p'?Math.max(0,Math.round(+v||0)):v.trim();save();toast('Сохранено')}
+async function svPh(id,inp){const s=SV.find(x=>x.id===id),f=inp.files[0];if(!s||!f)return;const u=await shrink(f,500);if(u){s.photo=u;if(save())toast('Фото обновлено')}draw()}
+function admSrv(){return `<h2>Заявки · ${SQ.length}</h2>${SQ.map(q=>sqCard(q,1)).join('')||'<p class="mu">Заявок пока нет.</p>'}<h2>Мастера · ${SV.length}</h2><div class="box"><b>Новый мастер</b><input id="vn" placeholder="Имя или название"><div class="two"><select id="vc">${SCATS.map(c=>`<option value="${c}">${c}</option>`).join('')}</select><input id="vp" type="tel" inputmode="tel" placeholder="Телефон"></div><div class="two"><input id="vr" type="number" inputmode="numeric" placeholder="Цена от, сомони"><input id="vu" placeholder="За что (за выезд)"></div><input id="vd" placeholder="Описание"><button class="btn" onclick="addSv()">Добавить мастера</button></div>${SV.map(s=>`<div class="box"><div class="sp"><b>${s.e||'🛠'} ${esc(s.n)}</b><span class="mu">${s.c}</span></div><div class="two"><label class="f">Цена от<input type="number" inputmode="numeric" value="${s.p}" onchange="svSet(${s.id},'p',this.value)"></label><label class="f">Телефон<input type="tel" value="${esc(s.ph||'')}" onchange="svSet(${s.id},'ph',this.value)"></label></div><label class="f">Описание<input value="${esc(s.d||'')}" onchange="svSet(${s.id},'d',this.value)"></label><div class="pth">${s.photo?`<div><img src="${s.photo}" alt=""></div>`:''}<label class="upl">📷 Фото<input type="file" accept="image/*" onchange="svPh(${s.id},this)"></label></div>${dbtn('v',s.id)}</div>`).join('')}`}
+function prod(){const x=find(S.pid);if(!x)return home();
+return `<button class="lnk" onclick="S.pid=null;draw()">← Назад</button>
+<div class="pv">${(x.ph||[]).length?`<div><img class="bigph" src="${x.ph[Math.min(S.gi||0,x.ph.length-1)]}" alt="${esc(x.t)}">${x.ph.length>1?`<div class="gal">${x.ph.map((u,i)=>`<img src="${u}" class="${i===Math.min(S.gi||0,x.ph.length-1)?'on':''}" onclick="S.gi=${i};draw()" alt="">`).join('')}</div>`:''}</div>`:`<div class="im big">${x.e}</div>`}<div style="display:flex;flex-direction:column;gap:8px"><h1>${esc(x.t)}</h1>
+<div class="mu">${x.n?'★ '+x.r+' · '+x.n+' отзывов':'Новинка'} · продавец ${esc(x.s)} · ${esc(x.c)}</div>
+<p>${esc(x.d)}</p><div class="pr lg">${rub(x.p)}</div><div class="mu">В наличии: ${x.st} шт.</div>
+<div>${ctl(x)}</div><button class="lnk" onclick="openS('${E(x.s)}','p')">🏪 Все товары магазина ${esc(x.s)}</button></div></div>`}
+function add(id){const x=find(id);if(!x)return;const n=(C[id]||0)+1;if(n>x.st){toast('Больше нет в наличии');return}C[id]=n;save();toast('Добавлено в корзину');draw()}
+function qty(id,d){const x=find(id);if(!x){delete C[id];save();draw();return}const n=(C[id]||0)+d;if(n<=0)delete C[id];else if(n<=x.st)C[id]=n;else toast('Больше нет в наличии');save();draw()}
+function cartShops(){return [...new Set(Object.keys(C).map(id=>(find(id)||{}).s).filter(Boolean))].map(shopOf).filter(Boolean)}
+function geoCart(){geo(async p=>{S.dl=p;if(U){U.loc=p;save()}toast('Точка доставки определена');draw();const a=await revGeo(p);if(a){S.ad=a;draw()}})}
+async function calcCart(){const k=S.dkKey,r=await roadKm([...cartShops(),S.dl]);if(S.dkKey===k){S.dk=r;draw()}}
+function cart(){
+const it=Object.keys(C).map(id=>({x:find(id),q:C[id]})).filter(i=>i.x);
+if(!it.length)return '<h1>Корзина</h1><p class="mu">В корзине пока пусто.</p><a class="btn" href="#home">Перейти в каталог</a>';
+const tot=it.reduce((a,i)=>a+i.x.p*i.q,0),sh=cartShops();
+if(S.ad==null)S.ad=U&&U.addr||'';if(!has(S.dl)&&U&&has(U.loc))S.dl=U.loc;
+const key=sh.map(s=>s.name).join('|')+'@'+(has(S.dl)?gq(S.dl):'');if(has(S.dl)&&S.dkKey!==key){S.dkKey=key;S.dk='…';setTimeout(calcCart)}
+const dk=S.dk&&S.dk!=='…'&&S.dkKey===key?S.dk:null,fe=fee(dk?dk.km:null,tot);
+return `<h1>Корзина</h1>${it.map(i=>`<div class="row"><span class="em${pim(i.x)?' ph':''}" style="width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:none${pim(i.x)?`;background-image:url('${pim(i.x)}')`:''}">${pim(i.x)?'':i.x.e}</span><div class="gr"><div class="tt" onclick="openP(${i.x.id})">${esc(i.x.t)}</div><div class="mu">${rub(i.x.p)} · ${esc(i.x.s)}</div></div><div class="qty"><button onclick="qty(${i.x.id},-1)" aria-label="Меньше">−</button><b>${i.q}</b><button onclick="qty(${i.x.id},1)" aria-label="Больше">+</button></div></div>`).join('')}
+<div class="box"><b>Доставка</b><div class="geo"><input id="ad" placeholder="Адрес доставки" value="${esc(S.ad)}" oninput="S.ad=this.value;this.classList.remove('err')"><button class="btn sec" onclick="geoCart()">📍 GPS</button></div>
+${has(S.dl)?gEmb(S.dl):'<div class="demo">Нажмите 📍 GPS, чтобы определить точку доставки — курьер найдёт вас быстрее, а цена рассчитается по расстоянию.</div>'}
+<div class="km">${sh.map(s=>`<span>🏪 ${esc(s.name)}</span>`).join('')}${S.dk==='…'&&S.dkKey===key?'<span>Считаем маршрут…</span>':dk?`<span>🛣 ${dk.km.toFixed(1)} км</span><span>⏱ ~${Math.max(5,Math.round(dk.min))} мин</span>`:''}</div>
+${dk&&dk.src==='est'?'<div class="mu">Расстояние оценено по прямой с поправкой на дороги.</div>':''}
+${U?'':`<div class="two"><input id="gp" type="tel" inputmode="tel" placeholder="Телефон" value="${esc(S.gp||'')}" oninput="S.gp=this.value"><input id="gn" placeholder="Ваше имя" value="${esc(S.gn||'')}" oninput="S.gn=this.value"></div>`}<select id="py" onchange="S.py=this.value"><option value="cash" ${S.py==='card'?'':'selected'}>Наличными при получении</option><option value="card" ${S.py==='card'?'selected':''}>Картой при получении</option></select>
+<div class="sp"><span>Товары</span><span>${rub(tot)}</span></div><div class="sp"><span>Доставка</span><span>${fe?rub(fe):'Бесплатно'}</span></div><div class="sp pr lg"><span>Итого</span><span>${rub(tot+fe)}</span></div>
+<label class="chk" id="tml"><input type="checkbox" id="tm" ${S.tm?'checked':''} onchange="S.tm=this.checked;this.parentNode.classList.remove('err')"><span>Согласен с <a href="#terms">условиями и политикой конфиденциальности</a></span></label><button class="btn" onclick="order()">Оформить заказ</button></div>`}
+function bad(id,m){toast(m);const el=$('#'+id);if(el){el.classList.add('err');try{el.scrollIntoView({block:'center',behavior:'smooth'})}catch(e){}if(el.focus)el.focus()}}
+function order(){
+const ad=$('#ad').value.trim();if(!ad){bad('ad','Укажите адрес доставки');return}
+let ph=null;if(!U){ph=normP($('#gp').value);if(!ph){bad('gp','Введите номер телефона, например 92 123 45 67');return}}
+if(!$('#tm').checked){bad('tml','Подтвердите согласие с условиями');return}
+if(!U){let u=USERS.find(x=>x.email===ph);if(!u){u={email:ph,name:($('#gn').value.trim())||'Клиент '+ph.slice(-4),role:'buyer'};USERS.push(u)}U=u}
+const items=Object.keys(C).map(id=>{const x=find(id);if(!x)return null;const q=Math.min(C[id],x.st);return q>0?{id:x.id,t:x.t,p:x.p,q,s:x.s}:null}).filter(Boolean);
+if(!items.length){toast('Товары закончились');return}
+items.forEach(i=>{find(i.id).st-=i.q});
+const sub=items.reduce((a,i)=>a+i.p*i.q,0),dk=S.dk&&S.dk!=='…'?S.dk:null,now=Date.now();
+O.unshift({id:Math.max(1000,...O.map(o=>o.id))+1,b:U.email,bn:U.name,items,total:sub,fee:fee(dk?dk.km:null,sub),km:dk?+dk.km.toFixed(2):null,loc:has(S.dl)?S.dl:null,addr:ad,st:ST[0],hist:[{st:ST[0],ts:now}],pay:$('#py').value==='card'?'card':'cash',ts:now,d:new Date().toLocaleDateString('ru-RU')});
+U.addr=ad;if(has(S.dl))U.loc=S.dl;C={};S.ad=null;S.dk=null;S.dkKey=null;S.tm=false;S.py=null;S.gp='';S.gn='';save();toast('Заказ оформлен');go('orders')}
+function setSt(id,v){const o=O.find(o=>o.id==id);if(!o||o.st===v)return;if(v===ST[4]&&o.st!==ST[4])o.items.forEach(i=>{const x=find(i.id);if(x)x.st+=i.q});if(o.st===ST[4]&&v!==ST[4])o.items.forEach(i=>{const x=find(i.id);if(x)x.st=Math.max(0,x.st-i.q)});if(v===ST[0]){delete o.cr;delete o.crn}o.st=v;(o.hist=o.hist||[]).push({st:v,ts:Date.now()});save();draw()}
+function assign(id,e){const o=O.find(o=>o.id==id),u=USERS.find(x=>x.email===e);if(u){o.cr=u.email;o.crn=u.name;if(o.st===ST[0]){setSt(id,ST[1])}else{save();draw()}toast('Курьер назначен')}else{delete o.cr;delete o.crn;save();draw()}}
+function crAct(id,k){const o=O.find(o=>o.id==id);if(!o||!U)return;
+if(k===1){if(o.st!==ST[0]||o.cr){toast('Заказ уже взял другой курьер');draw();return}o.cr=U.email;o.crn=U.name}else if(o.cr!==U.email)return;
+if(ST.indexOf(o.st)!==k-1){draw();return}setSt(id,ST[k]);toast(['','Заказ принят','Товар получен','Заказ доставлен'][k])}
+function crCard(o){const shs=[...new Set(o.items.map(i=>i.s))].map(n=>shopOf(n)||{name:n}),pts=[...shs,o.loc||{}],k=ST.indexOf(o.st),mine=o.cr===U.email;
+return `<div class="box"><div class="sp"><b>Заказ №${o.id}</b><span class="${stc(o.st)}">${o.st}</span></div>${tline(o)}
+${shs.map(s=>`<div class="addr"><span>🏪 <b>${esc(s.name)}</b><br><span class="mu">${esc(s.addr||'Адрес не указан')}${s.phone?' · '+esc(s.phone):''}</span></span>${mlink(s)}</div>`).join('')}
+<div class="addr"><span>🏠 <b>${esc(o.addr)}</b>${k>=1&&mine?`<br><span class="mu">${esc(o.bn)} · ${esc(fmtP(o.b))}</span>`:''}</span>${mlink(o.loc)}</div>
+<div class="km">${o.km!=null?`<span>🛣 ${(+o.km).toFixed(1)} км</span>`:''}<span>💵 Доставка ${rub(o.fee||0)}</span><span>${o.pay==='card'?'Картой':'Наличными'} · ${rub(o.total+(o.fee||0))}</span></div>
+${o.items.map(i=>`<div class="sp mu"><span>${esc(i.t)} × ${i.q}</span><span>${esc(i.s)}</span></div>`).join('')}
+${pts.filter(has).length>=2&&k<3?`<a class="btn sec" href="${gDir(pts)}" target="_blank" rel="noopener">🧭 Маршрут в Google Картах</a>`:''}
+${k===0&&!o.cr?`<button class="btn" onclick="crAct(${o.id},1)">Принять заказ</button>`:k===1&&mine?`<button class="btn" onclick="crAct(${o.id},2)">Забрал товар</button>`:k===2&&mine?`<button class="btn" onclick="crAct(${o.id},3)">Доставил</button>`:''}</div>`}
+function courier(){if(!U||U.role!=='courier')return `<h1>Кабинет курьера</h1><p class="mu">Доступ курьера выдаёт администратор. Войдите по номеру телефона и обратитесь к администратору.</p><a class="btn" href="#login">Войти</a>`;
+const fr=O.filter(o=>o.st===ST[0]&&!o.cr),my=O.filter(o=>o.cr===U.email&&(o.st===ST[1]||o.st===ST[2])),dn=O.filter(o=>o.cr===U.email&&o.st===ST[3]),t0=new Date().setHours(0,0,0,0),td=dn.filter(o=>lastTs(o)>=t0),sm=a=>rub(a.reduce((s,o)=>s+(o.fee||0),0));
+const ct=S.ct||'free',T=[['free','Новые ('+fr.length+')'],['my','Мои ('+my.length+')'],['done','Доставлено']],list=ct==='free'?fr:ct==='my'?my:dn;
+return `<h1>🛵 Кабинет курьера</h1><div class="kp">${kpi(sm(td),'Заработано сегодня')}${kpi(td.length,'Доставок сегодня')}${kpi(sm(dn),'Заработано всего')}${kpi(my.length,'В работе')}</div><div class="chips" style="margin:10px 0">${T.map(t=>`<button class="chip ${ct===t[0]?'on':''}" onclick="S.ct='${t[0]}';draw()">${t[1]}</button>`).join('')}</div>${list.map(crCard).join('')||'<p class="mu">Здесь пока пусто.</p>'}`}
+function needLogin(t){return `<h1>${t}</h1><p class="mu">Войдите в аккаунт, чтобы продолжить.</p><a class="btn" href="#login">Войти или зарегистрироваться</a>`}
+function orders(){if(!U)return needLogin('Мои заказы');const ng=O.filter(o=>o.b===U.email).length,ns=SQ.filter(q=>q.b===U.email).length,ot=S.ot||'g';
+const tabs=`<div class="chips"><button class="chip ${ot==='g'?'on':''}" onclick="S.ot='g';draw()">🛒 Товары · ${ng}</button><button class="chip ${ot==='srv'?'on':''}" onclick="S.ot='srv';draw()">🛠 Услуги · ${ns}</button></div>`;
+if(ot==='srv')return '<h1>Мои заказы</h1>'+tabs+(SQ.filter(q=>q.b===U.email).map(q=>sqCard(q,0)).join('')||'<p class="mu">Заявок пока нет.</p><a class="btn" href="#srv">Вызвать мастера</a>');
+return '<h1>Мои заказы</h1>'+tabs+ordersGoods().replace('<h1>Мои заказы</h1>','')}
+function ordersGoods(){
+const a=O.filter(o=>o.b===U.email);
+if(!a.length)return '<h1>Мои заказы</h1><p class="mu">Заказов пока нет.</p><a class="btn" href="#home">Перейти в каталог</a>';
+return `<h1>Мои заказы</h1>${a.map(o=>`<div class="box"><div class="sp"><b>Заказ №${o.id}</b><span class="${stc(o.st)}">${o.st}</span><button class="chip" onclick="openR(${o.id})">🧾 Чек</button></div>${tline(o)}<div class="mu">${o.d} · 📍 ${esc(o.addr)}</div>${o.crn?`<div class="mu">🛵 Курьер: ${esc(o.crn)}</div>`:''}${o.items.map(i=>`<div class="sp"><span>${esc(i.t)} × ${i.q}</span><span>${rub(i.p*i.q)}</span></div>`).join('')}<div class="sp mu"><span>Доставка${o.km!=null?' · '+(+o.km).toFixed(1)+' км':''}</span><span>${o.fee?rub(o.fee):'Бесплатно'}</span></div><div class="sp"><b>Итого</b><b>${rub(o.total+(o.fee||0))}</b></div>${o.st===ST[0]?`<button class="btn sec" onclick="setSt(${o.id},'${ST[4]}')">Отменить заказ</button>`:''}</div>`).join('')}`}
+function seller(){if(!U||U.role!=='seller'||!shopOf(U.shop))return `<h1>Кабинет продавца</h1><p class="mu">Доступ продавца выдаёт администратор маркетплейса. Войдите по номеру телефона, а для доступа обратитесь к администратору.</p><a class="btn" href="#login">Войти</a>`;return adminShop(U.shop,1)}
+function normP(v){let d=String(v).replace(/\D/g,'');if(d.length===9)d='992'+d;return d.length>=11&&d.length<=15?d:null}
+function fmtP(id){return /^\d{11,15}$/.test(id)?'+'+id.replace(/^(992)(\d{2})(\d{3})(\d{2})(\d{2})$/,'$1 $2 $3 $4 $5'):id}
+function login(){
+if(U)return `<h1>Профиль</h1><div class="box"><div><b>${esc(U.name)}</b><div class="mu">${esc(fmtP(U.email))} · ${U.role==='seller'?'продавец, магазин '+esc(U.shop):U.role==='admin'?'администратор':U.role==='courier'?'курьер':'покупатель'}</div></div>${U.role==='seller'?'<a class="btn" href="#seller">Кабинет продавца</a>':U.role==='admin'?'<a class="btn" href="#admin">Панель администратора</a>':U.role==='courier'?'<a class="btn" href="#courier">Кабинет курьера</a>':'<a class="btn" href="#orders">Мои заказы</a>'}<button class="btn sec" onclick="out()">Выйти</button></div>`;
+const two=S.step===2,known=USERS.some(u=>u.email===S.lp);
+return `<h1>Вход по номеру телефона</h1><p class="mu">Введите номер, и аккаунт создастся сам. Отдельная регистрация не нужна.</p>
+<div class="box">${two?`<div class="mu">Код отправлен на ${esc(fmtP(S.lp))}</div><div class="demo">Демо-режим: код ${S.code}. В рабочей версии он придёт по SMS.</div><input id="lc" inputmode="numeric" maxlength="4" placeholder="Код из SMS">${known?'':'<input id="ln" placeholder="Как к вам обращаться?">'}<button class="btn" onclick="doLogin()">Войти</button><button class="lnk" onclick="S.step=1;draw()">Другой номер</button>`:`<input id="lp" type="tel" inputmode="tel" placeholder="+992 XX XXX XX XX" value="${S.lp?esc(fmtP(S.lp)):''}"><button class="btn" onclick="askCode()">Получить код</button>`}</div>
+<h2>Демо-аккаунты</h2><div class="box"><div class="mu">Прототип: данные хранятся только в вашем браузере.</div><button class="btn sec" onclick="demo('buyer@demo')">Войти как покупатель Анна</button><button class="btn sec" onclick="demo('tech@demo')">Войти как продавец TechStore</button><button class="btn sec" onclick="demo('home@demo')">Войти как продавец HomeHub</button><button class="btn sec" onclick="demo('courier@demo')">Войти как курьер Фаррух</button><button class="btn sec" onclick="demo('admin@demo')">Войти как админ маркетплейса</button></div>`}
+const home4=u=>u.role==='seller'?'seller':u.role==='admin'?'admin':u.role==='courier'?'courier':'home';
+function demo(e){U=USERS.find(u=>u.email===e);if(!U)return;save();go(home4(U))}
+function askCode(){const p=normP($('#lp').value);if(!p){toast('Введите номер полностью, например 92 123 45 67');return}S.lp=p;S.code=String(1000+Math.floor(Math.random()*9000));S.step=2;draw()}
+function doLogin(){if($('#lc').value.trim()!==S.code){toast('Неверный код');return}
+let u=USERS.find(x=>x.email===S.lp);if(!u){const n=($('#ln')||{value:''}).value.trim();u={email:S.lp,name:n||'Клиент '+S.lp.slice(-4),role:'buyer'};USERS.push(u)}
+U=u;S.step=1;S.code='';save();toast('Добро пожаловать');const nx=S.next;S.next=null;go(nx||home4(u))}
+const dbtn=(k,id)=>`<button class="btn sec dng" onclick="del('${k}','${E(String(id))}')">${S.cf===k+id?'Точно удалить?':'Удалить'}</button>`;
+function del(k,i){i=decodeURIComponent(i);if(S.cf!==k+i){S.cf=k+i;toast('Нажмите ещё раз, чтобы удалить');draw();return}S.cf=null;
+if(k==='s'){delShop(i);S.as=null}else if(k==='p'){P=P.filter(x=>x.id!=i);delete C[i]}else if(k==='o')O=O.filter(o=>o.id!=i);else if(k==='u')USERS=USERS.filter(u=>u.email!==i);else if(k==='r')RV.splice(+i,1);else if(k==='v')SV=SV.filter(x=>x.id!=i);
+save();toast('Удалено');draw()}
+function delShop(n){SH=SH.filter(s=>s.name!==n);P=P.filter(x=>x.s!==n);Object.keys(C).forEach(id=>{if(!find(id))delete C[id]});delete R[n];RV=RV.filter(r=>r.s!==n);if(ORD)ORD=ORD.filter(x=>x!==n);USERS.forEach(u=>{if(u.shop===n){u.role='buyer';delete u.shop}})}
+function renameShop(o,v){o=decodeURIComponent(o);v=v.trim();if(!v||v===o)return;if(shopOf(v)){toast('Такое название уже есть');draw();return}
+shopOf(o).name=v;P.forEach(x=>{if(x.s===o)x.s=v});if(R[o]){R[v]=R[o];delete R[o]}RV.forEach(r=>{if(r.s===o)r.s=v});if(ORD)ORD=ORD.map(x=>x===o?v:x);USERS.forEach(u=>{if(u.shop===o)u.shop=v});O.forEach(q=>q.items.forEach(i=>{if(i.s===o)i.s=v}));if(S.as===o)S.as=v;save();toast('Название изменено');draw()}
+function setDesc(n,v){shopOf(decodeURIComponent(n)).d=v.trim();save();toast('Сохранено')}
+function resetVotes(n){R[decodeURIComponent(n)]={};save();toast('Оценки сброшены');draw()}
+function setPrice(id,v){const p=Math.round(+v);if(!(p>0)){toast('Цена должна быть больше нуля');draw();return}find(id).p=p;save();toast('Цена сохранена')}
+function setStock(id,v){const x=find(id),k=Math.round(+v);if(!(k>=0)){toast('Остаток не может быть отрицательным');draw();return}x.st=k;if(C[id]>k){k?C[id]=k:delete C[id]}save();toast('Остаток сохранён')}
+function setRole(e,r){const u=USERS.find(x=>x.email===decodeURIComponent(e));u.role=r;
+if(r==='seller'){if(!u.shop||!shopOf(u.shop)){const f=SH.find(s=>!USERS.some(x=>x.shop===s.name));if(f)u.shop=f.name;else{u.shop='Магазин '+u.email.slice(-4);SH.push({name:u.shop,e:'🏪',g:'#cdeccf,#4caf7a',d:'Новый магазин'});if(ORD)ORD.push(u.shop)}}}else delete u.shop;
+save();toast('Роль изменена');draw()}
+function setShop(e,n){const u=USERS.find(x=>x.email===decodeURIComponent(e));u.shop=n;save();toast('Магазин привязан');draw()}
+function usersTab(){return `<div class="mu">Пользователи сами регистрируются по номеру телефона и получают доступ «покупатель». Здесь вы выдаёте доступ продавца или курьера и привязываете магазин.</div>`+USERS.map(u=>{const e=E(u.email),me=u.email===U.email;return `<div class="box"><div class="sp"><b>${esc(u.name)}</b><span class="mu">${esc(fmtP(u.email))}</span></div><div class="two"><select ${me?'disabled':''} onchange="setRole('${e}',this.value)">${[['buyer','Покупатель'],['seller','Продавец'],['courier','Курьер'],['admin','Админ']].map(r=>`<option value="${r[0]}" ${u.role===r[0]?'selected':''}>${r[1]}</option>`).join('')}</select>${u.role==='seller'?`<select onchange="setShop('${e}',this.value)">${SH.map(s=>`<option value="${esc(s.name)}" ${u.shop===s.name?'selected':''}>${esc(s.name)}</option>`).join('')}</select>`:'<span></span>'}</div>${me?'<div class="mu">Это вы</div>':dbtn('u',u.email)}</div>`}).join('')}
+function addShop(){const n=$('#sn1').value.trim();if(!n){toast('Укажите название');return}if(shopOf(n)){toast('Такое название уже есть');return}SH.push({name:n,e:$('#se').value.trim()||'🏪',g:'#cdeccf,#4caf7a',d:$('#sd1').value.trim()||'Новый магазин'});save();toast('Магазин добавлен');draw()}
+function adminAddP(){const g=i=>$('#'+i).value.trim(),t=g('at'),p=+g('ap'),k=+g('ak');if(!t||!(p>0)||g('ak')===''||!(k>=0)){toast('Укажите название, цену и остаток');return}P.push({id:Math.max(0,...P.map(x=>x.id))+1,t,c:$('#ac').value,p:Math.round(p),r:0,n:0,e:g('ae')||'📦',s:$('#as').value,st:Math.round(k),d:'Описание не указано.'});save();toast('Товар добавлен');draw()}
+function admin(){
+if(!U||U.role!=='admin')return `<h1>Панель администратора</h1><p class="mu">Доступно только администратору.</p><a class="btn" href="#login">Войти</a>`;
+if(S.as&&shopOf(S.as))return adminShop(S.as);
+const T=[['shops','Магазины'],['report','Отчёты'],['products','Товары'],['orders','Заказы'],['users','Люди'],['srv','Услуги'],['reviews','Отзывы'],['settings','Настройки']];
+const rev=O.filter(o=>o.st!=='Отменён').reduce((a,o)=>a+o.total,0);let b='';
+if(S.at==='shops')b=`<div class="box"><b>Новый магазин</b><div class="two"><input id="sn1" placeholder="Название"><input id="se" placeholder="Эмодзи (🏪)" maxlength="4"></div><input id="sd1" placeholder="Описание"><button class="btn" onclick="addShop()">Добавить магазин</button></div>`+SH.map(s=>{const st=stat(s.name),rv=O.filter(o=>o.st!=='Отменён').reduce((a,o)=>a+o.items.filter(i=>i.s===s.name).reduce((b,i)=>b+i.p*i.q,0),0);return `<div class="box" style="cursor:pointer" onclick="S.as=decodeURIComponent('${E(s.name)}');S.ast='an';draw();scrollTo(0,0)"><div class="sp"><b>${s.e||'🏪'} ${esc(s.name)}</b><span class="mu">›</span></div><div class="mu">★ ${st.n?st.r.toFixed(1):'–'} · ${P.filter(x=>x.s===s.name).length} товаров · ${rub(rv)}</div></div>`}).join('');
+else if(S.at==='report')b=report();
+else if(S.at==='settings')b=settingsTab();
+else if(S.at==='products')b=`<div class="box"><b>Новый товар</b><input id="at" placeholder="Название"><div class="two"><select id="as">${SH.map(s=>`<option>${esc(s.name)}</option>`).join('')}</select><select id="ac">${CATS.map(c=>`<option>${c}</option>`).join('')}</select></div><div class="two"><input id="ap" type="number" inputmode="numeric" placeholder="Цена"><input id="ak" type="number" inputmode="numeric" placeholder="Остаток"></div><input id="ae" placeholder="Эмодзи (📦)" maxlength="4"><button class="btn" onclick="adminAddP()">Добавить товар</button></div>`+P.map(prow).join('');
+else if(S.at==='orders')b=O.map(o=>`<div class="box"><div class="sp"><b>№${o.id} · ${esc(o.bn)}</b><button class="chip" onclick="openR(${o.id})">🧾 Чек</button><select onchange="setSt(${o.id},this.value)">${ST.map(s=>`<option ${s===o.st?'selected':''}>${s}</option>`).join('')}</select></div><div class="mu">${o.d} · 📍 ${esc(o.addr)}</div>${tline(o)}${o.items.map(i=>`<div class="sp"><span>${esc(i.t)} × ${i.q}</span><span class="mu">${esc(i.s)}</span></div>`).join('')}<div class="two"><span class="mu">🛵 ${o.crn?esc(o.crn):'Курьер не назначен'} · доставка ${rub(o.fee||0)}${o.km!=null?' · '+(+o.km).toFixed(1)+' км':''}</span><select onchange="assign(${o.id},this.value)"><option value="">— курьер —</option>${USERS.filter(u=>u.role==='courier').map(u=>`<option value="${esc(u.email)}" ${o.cr===u.email?'selected':''}>${esc(u.name)}</option>`).join('')}</select></div><div class="sp"><b>${rub(o.total+(o.fee||0))}</b>${dbtn('o',o.id)}</div></div>`).join('')||'<p class="mu">Заказов нет.</p>';
+else if(S.at==='users')b=usersTab();
+else if(S.at==='srv')b=admSrv();
+else b=RV.map((r,i)=>`<div class="box"><div class="sp"><b>${esc(r.n)}</b><span class="mu">${esc(r.s)} · ${r.d}</span></div><div>${esc(r.t)}</div>${dbtn('r',i)}</div>`).join('')||'<p class="mu">Отзывов нет.</p>';
+return `<h1>Панель администратора</h1><div class="mu">Магазинов ${SH.length} · товаров ${P.length} · заказов ${O.length} · выручка ${rub(rev)}</div><div class="chips" style="margin:10px 0">${T.map(t=>`<button class="chip ${S.at===t[0]?'on':''}" onclick="S.at='${t[0]}';S.as=null;S.cf=null;draw()">${t[1]}</button>`).join('')}</div>${b}`}
+const TJ={"Тема":"Мавзӯъ","Режим":"Реҷа","Авто":"Худкор","Светлый":"Рӯшан","Тёмный":"Торик","Готово":"Тайёр","Зелёная":"Сабз","Солнечная":"Офтобӣ","Небесная":"Осмонӣ","Гранатовая":"Анорӣ","Лавандовая":"Бунафш","Услуги":"Хизматҳо","Мастера Исфары":"Устоҳои Исфара","Ремонт дома, электрик, техника и компьютеры — вызовите мастера на дом.":"Таъмири хона, электрик, техника ва компютер — устоҳоро ба хона даъват кунед.","Ремонт дома":"Таъмири хона","Электрик":"Электрик","Сантехник":"Сантехник","Компьютеры":"Компютерҳо","Мастеров пока нет.":"Ҳоло усто нест.","Позвонить":"Занг задан","Вызвать мастера":"Даъвати усто","от":"аз","за выезд":"барои омадан","за осмотр":"барои дидан","диагностика":"ташхис","Все мастера":"Ҳамаи устоҳо","Вызов мастера":"Даъвати усто","окончательную цену мастер назовёт после осмотра":"нархи ниҳоиро усто баъд аз дидан мегӯяд","Что случилось?":"Чӣ шуд?","Опишите проблему: например, не работает розетка на кухне":"Мушкилотро нависед: масалан, розеткаи ошхона кор намекунад","Когда удобно":"Кай қулай аст","Как можно скорее":"Ҳарчи зудтар","Сегодня":"Имрӯз","Завтра":"Фардо","В выходные":"Дар рӯзҳои истироҳат","Отправить заявку":"Фиристодани дархост","Опишите проблему":"Мушкилотро нависед","Укажите адрес":"Суроғаро нависед","Мастер принял":"Усто қабул кард","Выполнено":"Иҷро шуд","Отменить заявку":"Бекор кардани дархост","Позвонить мастеру":"Ба усто занг задан","Мастер":"Усто","Заявки":"Дархостҳо","Заявок пока нет.":"Ҳоло дархост нест.","Мастера":"Устоҳо","Новый мастер":"Устои нав","Имя или название":"Ном ё номи ширкат","Цена от, сомони":"Нарх аз, сомонӣ","За что (за выезд)":"Барои чӣ (барои омадан)","Добавить мастера":"Иловаи усто","Цена от":"Нарх аз","Мастер добавлен":"Усто илова шуд","Укажите имя и телефон":"Ном ва телефонро нависед","Фото добавлено":"Акс илова шуд","Удалить фото":"Нест кардани акс","Память браузера заполнена — удалите лишние фото.":"Хотираи браузер пур шуд — аксҳои зиёдатиро нест кунед.","Можно до 4 фото":"То 4 акс мумкин аст","Ремонт":"Таъмир","Телефон":"Телефон","Ваше имя":"Номи шумо","Введите номер телефона, например 92 123 45 67":"Рақами телефонро ворид кунед, масалан 92 123 45 67","Магазины":"Мағозаҳо","Категории":"Категорияҳо","Все категории":"Ҳамаи категорияҳо","Меню":"Меню","+ Добавить":"+ Илова","Оформить →":"Тасдиқ →","Все товары магазина":"Ҳамаи маҳсулоти мағоза","Отзывы":"Шарҳҳо","товаров":"маҳсулот","Заявка отправлена":"Дархост фиристода шуд","Курьер принял":"Курйер қабул кард","Товар получен":"Маҳсулот гирифта шуд","Заявка":"Дархост","Курьер":"Курйер","курьер":"курйер","Курьер:":"Курйер:","Получен":"Гирифта шуд","Доставка":"Расонидан","доставка":"расонидан","Бесплатно":"Ройгон","Кабинет курьера":"Кабинети курйер","Доступ курьера выдаёт администратор. Войдите по номеру телефона и обратитесь к администратору.":"Дастрасии курйерро маъмур медиҳад. Бо рақами телефон ворид шавед ва ба маъмур муроҷиат кунед.","Заработано сегодня":"Даромади имрӯз","Доставок сегодня":"Расониданҳои имрӯз","Заработано всего":"Даромади умумӣ","В работе":"Дар кор","Новые":"Навҳо","Мои":"Аз они ман","Доставлено":"Расонида шуд","Здесь пока пусто.":"Ҳоло ин ҷо холӣ аст.","Адрес не указан":"Суроға нишон дода нашудааст","Карта":"Харита","Маршрут в Google Картах":"Масир дар Google Харита","Принять заказ":"Қабули фармоиш","Забрал товар":"Маҳсулотро гирифтам","Доставил":"Расонидам","Заказ уже взял другой курьер":"Фармоишро курйери дигар гирифт","Заказ принят":"Фармоиш қабул шуд","Заказ доставлен":"Фармоиш расонида шуд","Курьер не назначен":"Курйер таъин нашудааст","Курьер назначен":"Курйер таъин шуд","— курьер —":"— курйер —","Войти как курьер Фаррух":"Ворид шудан ҳамчун курйер Фаррух","Нажмите 📍 GPS, чтобы определить точку доставки — курьер найдёт вас быстрее, а цена рассчитается по расстоянию.":"Тугмаи 📍 GPS-ро пахш кунед, то нуқтаи расонидан муайян шавад — курйер шуморо зудтар меёбад ва нарх аз рӯи масофа ҳисоб мешавад.","Считаем маршрут…":"Масир ҳисоб мешавад…","мин":"дақ","Расстояние оценено по прямой с поправкой на дороги.":"Масофа бо хати рост ва ислоҳ барои роҳҳо баҳо дода шуд.","Доставка и курьеры":"Расонидан ва курйерҳо","Подача, сомони":"Нархи ибтидоӣ, сомонӣ","За 1 км, сомони":"Барои 1 км, сомонӣ","Минимум, сомони":"Ҳадди ақал, сомонӣ","Бесплатно от суммы, сомони":"Ройгон аз маблағи, сомонӣ","Формула: подача + км × цена за км, но не меньше минимума. 0 в поле «бесплатно» — бесплатной доставки нет.":"Формула: нархи ибтидоӣ + км × нархи 1 км, вале на камтар аз ҳадди ақал. 0 дар майдони «ройгон» — расонидани ройгон нест.","Вся сумма доставки идёт курьеру.":"Тамоми маблағи расонидан ба курйер мерасад.","GPS недоступен на этом устройстве":"GPS дар ин дастгоҳ дастрас нест","Определяем местоположение…":"Ҷойгиршавӣ муайян мешавад…","Разрешите доступ к геолокации":"Ба геолокатсия иҷозат диҳед","Не удалось определить место":"Ҷойро муайян кардан нашуд","Точка магазина сохранена":"Нуқтаи мағоза захира шуд","Точка доставки определена":"Нуқтаи расонидан муайян шуд","Точка на карте не задана — нажмите 📍 GPS, находясь в магазине.":"Нуқта дар харита муқаррар нашудааст — дар мағоза истода 📍 GPS-ро пахш кунед.","Адрес магазина":"Суроғаи мағоза","Доставка по GPS":"Расонидан бо GPS","Цена по расстоянию":"Нарх аз рӯи масофа","Статус заказа онлайн":"Ҳолати фармоиш онлайн","Выбирайте магазины города. Курьер заберёт заказ и привезёт к вам домой.":"Мағозаҳои шаҳрро интихоб кунед. Курйер фармоишро гирифта ба хонаатон меорад.","Здесь вы выдаёте доступ продавца или курьера и привязываете магазин.":"Дар ин ҷо шумо дастрасии фурӯшанда ё курйер медиҳед ва мағозаро мепайвандед.","Пользователи сами регистрируются по номеру телефона и получают доступ «покупатель».":"Корбарон худашон бо рақами телефон бақайд мешаванд ва дастрасии «харидор» мегиранд.","Картой":"Бо корт","Наличными":"Нақд",'Вход по номеру телефона':'Ворид шудан бо рақами телефон','Введите номер, и аккаунт создастся сам. Отдельная регистрация не нужна.':'Рақамро ворид кунед, ҳисоб худаш сохта мешавад. Бақайдгирии алоҳида лозим нест.','Получить код':'Гирифтани рамз','Код отправлен на':'Рамз фиристода шуд ба','Демо-режим: код':'Реҷаи намоишӣ: рамз','В рабочей версии он придёт по SMS.':'Дар версияи корӣ он тавассути SMS меояд.','Код из SMS':'Рамз аз SMS','Как к вам обращаться?':'Шуморо чӣ тавр хитоб кунем?','Другой номер':'Рақами дигар','Неверный код':'Рамзи нодуруст','Добро пожаловать':'Хуш омадед','Введите номер полностью, например 92 123 45 67':'Рақамро пурра ворид кунед, масалан 92 123 45 67','Войдите по номеру телефона, чтобы оформить заказ':'Барои фармоиш бо рақами телефон ворид шавед','Доступ продавца выдаёт администратор маркетплейса. Войдите по номеру телефона, а для доступа обратитесь к администратору.':'Дастрасии фурӯшандаро маъмури бозор медиҳад. Бо рақами телефон ворид шавед ва барои дастрасӣ ба маъмур муроҷиат кунед.','Прототип: данные хранятся только в вашем браузере.':'Прототип: маълумот танҳо дар браузери шумо нигоҳ дошта мешавад.','Витрина':'Намоиш','Комиссия — процент от продаж, который маркетплейс берёт за работу площадки.':'Комиссия — фоизест аз фурӯш, ки бозор барои кори майдон мегирад.','Комиссия сейчас:':'Комиссияи ҳозира:','К выплате — выручка минус комиссия: эту сумму маркетплейс отдаёт магазину.':'Барои пардохт — маблағи фурӯш минус комиссия: ин маблағро бозор ба мағоза медиҳад.','Искать магазины и товары':'Ҷустуҷӯи мағозаҳо ва маҳсулот','Панель администратора':'Панели маъмур','Панель':'Панел','Заказы':'Фармоишҳо','Войти или зарегистрироваться':'Ворид шудан ё бақайдгирӣ','Войти как покупатель Анна':'Ворид шудан ҳамчун харидор Анна','Войти как продавец':'Ворид шудан ҳамчун фурӯшанда','Войти как админ маркетплейса':'Ворид шудан ҳамчун маъмури бозор','Войти':'Ворид шудан','Выйти':'Баромадан','Корзина':'Сабад','Назад':'Бозгашт','Все магазины':'Ҳамаи мағозаҳо','Все':'Ҳама','Условия и политика':'Шартҳо ва сиёсат','Условия использования':'Шартҳои истифода','Условия':'Шартҳо','Конфиденциальность':'Махфият','Возврат и обмен':'Баргардонидан ва мубодила','Возврат':'Баргардонидан','Контакты':'Тамос','Рынок Исфары у вас в телефоне':'Бозори Исфара дар телефони шумо','Выбирайте магазины города. Лучшие определяют оценки покупателей.':'Мағозаҳои шаҳрро интихоб кунед. Беҳтаринҳоро баҳои харидорон муайян мекунанд.','Админ: порядок':'Маъмур: тартиб','задан вручную':'дастӣ муқаррар шудааст','по рейтингу':'аз рӯи рейтинг','Вернуть по рейтингу':'Баргардонидан аз рӯи рейтинг','Смартфоны':'Смартфонҳо','Ноутбуки':'Ноутбукҳо','Наушники':'Гӯшмонакҳо','Бытовая техника':'Техникаи рӯзгор','Дом':'Хона','Спорт':'Варзиш','Книги':'Китобҳо','Растения':'Растаниҳо','Продукты':'Хӯрокворӣ','↑ Выше':'↑ Боло','↓ Ниже':'↓ Поён','Заказать':'Фармоиш додан','Отзыв':'Шарҳ','Нет оценок':'Баҳо нест','Магазины не найдены. Измените запрос.':'Мағоза ёфт нашуд. Дархостро иваз кунед.','Что вы думаете о магазине?':'Дар бораи мағоза чӣ фикр доред?','Оставить отзыв':'Шарҳ гузоштан','Отзывы':'Шарҳҳо','Отзывов пока нет. Напишите первый.':'Ҳоло шарҳ нест. Аввалин шуда нависед.','оценок':'баҳо','Товары':'Маҳсулот','Популярные':'Машҳур','Дешевле':'Арзонтар','Дороже':'Гаронтар','В магазине пока нет товаров.':'Дар мағоза ҳоло маҳсулот нест.','отзывов':'шарҳ','Новинка':'Навигарӣ','В корзину':'Ба сабад','Нет в наличии':'Дар анбор нест','В наличии':'Дар анбор','шт.':'дона','продавец, магазин':'фурӯшанда, мағоза','продавец':'фурӯшанда','Больше нет в наличии':'Дигар дар анбор нест','Добавлено в корзину':'Ба сабад илова шуд','В корзине пока пусто.':'Сабад ҳоло холӣ аст.','Перейти в каталог':'Ба феҳрист гузаштан','Итого продавцу':'Ҷамъ ба фурӯшанда','Итого':'Ҷамъ','ИТОГО':'ҶАМЪ','Адрес доставки':'Суроғаи расонидан','Оформить заказ':'Тасдиқи фармоиш','Меньше':'Камтар','Больше':'Бештар','Наличными при получении':'Нақд ҳангоми гирифтан','Картой при получении':'Бо корт ҳангоми гирифтан','Наличными':'Нақд','Картой':'Бо корт','Согласен с':'Розӣ ҳастам бо','условиями и политикой конфиденциальности':'шартҳо ва сиёсати махфият','Войдите, чтобы оформить заказ':'Барои фармоиш ворид шавед','Укажите адрес доставки':'Суроғаи расониданро нависед','Подтвердите согласие с условиями':'Розигиро бо шартҳо тасдиқ кунед','Товары закончились':'Маҳсулот тамом шуд','Заказ оформлен':'Фармоиш қабул шуд','Мои заказы':'Фармоишҳои ман','Заказов пока нет.':'Ҳоло фармоиш нест.','Заказов нет.':'Фармоиш нест.','Заказов':'Фармоиш','заказов':'фармоиш','Заказ':'Фармоиш','Отменить заказ':'Бекор кардани фармоиш','Чек недоступен.':'Чек дастрас нест.','Чек':'Чек','Новый магазин':'Мағозаи нав','Новый товар':'Маҳсулоти нав','Новый':'Нав','Собран':'Ҷамъ карда шуд','В пути':'Дар роҳ','Доставлен':'Расонида шуд','Отменён':'Бекор шуд','Войдите в аккаунт, чтобы продолжить.':'Барои идома додан ба ҳисоб ворид шавед.','Кабинет продавца':'Кабинети фурӯшанда','Войдите как продавец или зарегистрируйте магазин.':'Ҳамчун фурӯшанда ворид шавед ё мағоза бақайд кунед.','Магазин':'Мағоза','магазин':'мағоза','Фото магазина':'Акси мағоза','Описание магазина':'Тавсифи мағоза','Аналитика':'Таҳлил','Мои товары':'Маҳсулоти ман','Добавьте первый товар ниже.':'Маҳсулоти аввалинро дар поён илова кунед.','Название магазина (для продавца)':'Номи мағоза (барои фурӯшанда)','Название':'Ном','Описание':'Тавсиф','Эмодзи':'Эмоҷӣ','Цена, сомони':'Нарх, сомонӣ','Цена':'Нарх','Остаток, шт.':'Боқимонда, дона','Остаток':'Боқимонда','Добавить товар':'Иловаи маҳсулот','Описание сохранено':'Тавсиф захира шуд','Фото обновлено':'Акс нав шуд','Фото':'Акс','Товар добавлен':'Маҳсулот илова шуд','Укажите название, цену и остаток':'Ном, нарх ва боқимондаро нависед','Эти данные печатаются на чеке покупателя.':'Ин маълумот дар чеки харидор чоп мешавад.','Юр. название / ФИО':'Номи ҳуқуқӣ / ному насаб','ИНН':'РМА','Телефон':'Телефон','Адрес':'Суроға','Профиль':'Профил','администратор':'маъмур','покупатель':'харидор','Покупатель':'Харидор','Продавец':'Фурӯшанда','Админ':'Маъмур','Вход':'Вуруд','Регистрация':'Бақайдгирӣ','Имя':'Ном','Эл. почта':'Почтаи электронӣ','Я покупатель':'Ман харидорам','Я продавец':'Ман фурӯшандаам','Создать аккаунт':'Сохтани ҳисоб','Демо-аккаунты':'Ҳисобҳои намоишӣ','Прототип без пароля: данные хранятся только в вашем браузере.':'Прототип бе парол: маълумот танҳо дар браузери шумо нигоҳ дошта мешавад.','Аккаунт не найден. Зарегистрируйтесь.':'Ҳисоб ёфт нашуд. Бақайдгирӣ кунед.','Укажите имя и корректную почту':'Ном ва почтаи дурустро нависед','Эта почта уже зарегистрирована':'Ин почта аллакай бақайд шудааст','Магазин с таким названием уже есть':'Мағоза бо чунин ном аллакай ҳаст','Укажите название магазина':'Номи мағозаро нависед','Аккаунт создан':'Ҳисоб сохта шуд','Войдите, чтобы оставить отзыв':'Барои гузоштани шарҳ ворид шавед','Напишите текст отзыва':'Матни шарҳро нависед','Отзыв опубликован':'Шарҳ нашр шуд','Свой магазин оценивать нельзя':'Мағозаи худро баҳо додан мумкин нест','Оценить магазин':'Мағозаро баҳо додан','Магазинов':'Мағозаҳо','Магазины':'Мағозаҳо','Отчёты':'Ҳисоботҳо','Люди':'Одамон','Настройки':'Танзимот','товаров':'маҳсулот','выручка':'фурӯш','комиссия':'комиссия','Нажмите ещё раз, чтобы удалить':'Барои нест кардан боз пахш кунед','Точно удалить?':'Дар ҳақиқат нест кунам?','Удалить':'Нест кардан','Удалено':'Нест шуд','Сохранено':'Захира шуд','Выручка':'Маблағи фурӯш','Продано, шт.':'Фурӯхта шуд, дона','Средний чек':'Чеки миёна','Комиссия':'Комиссия','К выплате':'Барои пардохт','Отмены':'Бекоршавӣ','Лучший день и час':'Беҳтарин рӯз ва соат','7 дней':'7 рӯз','30 дней':'30 рӯз','За всё время':'Тамоми давра','По дням недели':'Аз рӯи рӯзҳои ҳафта','По дням':'Аз рӯи рӯзҳо','По часам':'Аз рӯи соатҳо','Топ товаров':'Маҳсулоти беҳтарин','Оплата':'Пардохт','По магазинам':'Аз рӯи мағозаҳо','Нет данных за период.':'Барои ин давра маълумот нест.','Пн':'Дш','Вт':'Сш','Ср':'Чш','Чт':'Пш','Пт':'Ҷм','Сб':'Шн','Вс':'Як','Печать':'Чоп','Покупатель:':'Харидор:','Продавец:':'Фурӯшанда:','Адрес:':'Суроға:','Оплата:':'Пардохт:','Это товарный чек-подтверждение заказа. Фискальный чек выдаёт продавец в соответствии с законодательством.':'Ин чеки тасдиқи фармоиш аст. Чеки фискалиро фурӯшанда мувофиқи қонун медиҳад.','Шаблон. Перед запуском проверьте текст у юриста по законодательству Таджикистана.':'Намуна. Пеш аз оғоз матнро назди ҳуқуқшинос аз рӯи қонунгузории Тоҷикистон санҷед.','Продавцы отвечают за товары, цены и описания. Маркетплейс связывает покупателя и продавца и не заменяет документы продавца.':'Фурӯшандагон барои маҳсулот, нарх ва тавсифҳо масъуланд. Бозор харидор ва фурӯшандаро мепайвандад ва ҳуҷҷатҳои фурӯшандаро иваз намекунад.','Мы храним имя, номер телефона и адрес доставки только для выполнения заказа. Данные не передаются третьим лицам без согласия покупателя, кроме случаев, предусмотренных законом.':'Мо ном, рақами телефон ва суроғаи расонидани шуморо танҳо барои иҷрои фармоиш нигоҳ медорем. Маълумот бе розигии харидор ба шахси сеюм дода намешавад, ба истиснои ҳолатҳои қонун пешбинишуда.','Покупатель вправе вернуть товар надлежащего качества в срок, установленный законом. Для возврата свяжитесь с продавцом, его телефон указан на чеке.':'Харидор ҳуқуқ дорад маҳсулоти босифатро дар мӯҳлати қонунӣ баргардонад. Барои баргардонидан бо фурӯшанда тамос гиред, телефони ӯ дар чек навишта шудааст.','сомони':'сомонӣ'};
+let TRE;try{const L='[А-Яа-яЁёҒғӢӣҚқӮӯҲҳҶҷA-Za-z0-9]';TRE=new RegExp('(?<!'+L+')(?:'+Object.keys(TJ).sort((a,b)=>b.length-a.length).map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+')(?!'+L+')','g')}catch(e){}
+const tr=s=>LG==='tj'&&TRE?s.replace(TRE,m=>TJ[m]):s;
+function tx(r){if(!r)return;r.querySelectorAll('option:not([value])').forEach(o=>o.setAttribute('value',o.textContent));const w=document.createTreeWalker(r,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){const v=tr(n.nodeValue);if(v!==n.nodeValue)n.nodeValue=v}r.querySelectorAll('[placeholder],[aria-label]').forEach(e=>['placeholder','aria-label'].forEach(a=>{if(e.hasAttribute(a))e.setAttribute(a,tr(e.getAttribute(a)))}))}
+function setLg(l){LG=l;store.set('lg',l);draw()}
+function post(){const f=$('#ft');f.innerHTML=`<a href="#terms">Условия</a> · <a href="#terms">Конфиденциальность</a> · <a href="#terms">Возврат</a><div>${esc(CFG.name)} · ${esc(CFG.city)}</div>`;
+if(LG==='tj'){tx($('#m'));tx($('#cb'));tx(f)}document.querySelectorAll('#bn a').forEach(a=>a.setAttribute('aria-label',a.textContent.trim()))
+const el=$('#qr');if(el){if(window.QRCode){el.innerHTML='';new QRCode(el,{text:QRT,width:132,height:132})}else el.textContent=QRT}}
+const comOf=n=>{const s=shopOf(n);return s&&s.com!=null?+s.com:CFG.com};
+const WD=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+function an(shop){
+const per=S.per,lim=per?Date.now()-per*864e5:0,os=O.filter(o=>o.ts>=lim&&(!shop||o.items.some(i=>i.s===shop))),ok=os.filter(o=>o.st!=='Отменён');
+const K={n:ok.length,x:os.length-ok.length,q:0,rev:0,com:0},wd=Array(7).fill(0),hr=Array(24).fill(0),top={},bs={},pay={cash:0,card:0},nd=per||14,dv=Array(nd).fill(0),dl=[],t0=new Date();t0.setHours(0,0,0,0);
+ok.forEach(o=>{const t=new Date(o.ts),seen={};let sum=0;
+o.items.forEach(i=>{if(shop&&i.s!==shop)return;const m=i.p*i.q,c=m*comOf(i.s)/100,a=top[i.t]=top[i.t]||{q:0,m:0},b=bs[i.s]=bs[i.s]||{n:0,q:0,m:0,c:0};sum+=m;K.q+=i.q;K.com+=c;a.q+=i.q;a.m+=m;b.q+=i.q;b.m+=m;b.c+=c;if(!seen[i.s]){seen[i.s]=1;b.n++}});
+K.rev+=sum;wd[(t.getDay()+6)%7]+=sum;hr[t.getHours()]+=sum;pay[o.pay==='card'?'card':'cash']+=sum;
+const di=Math.round((t0-new Date(o.ts).setHours(0,0,0,0))/864e5);if(di>=0&&di<nd)dv[nd-1-di]+=sum});
+for(let i=0;i<nd;i++){const d=new Date(t0);d.setDate(d.getDate()-(nd-1-i));dl.push(i%Math.ceil(nd/7)===0?d.getDate()+'.'+String(d.getMonth()+1).padStart(2,'0'):'')}
+return{K,wd,hr,dv,dl,top,bs,pay,os}}
+function ana(shop){
+const A=an(shop),K=A.K,mx=a=>Math.max(...a),pk=(v,f)=>mx(v)>0?f(v.indexOf(mx(v))):'–';
+const ch=`<div class="chips">${[[7,'7 дней'],[30,'30 дней'],[0,'За всё время']].map(p=>`<button class="chip ${S.per===p[0]?'on':''}" onclick="S.per=${p[0]};draw()">${p[1]}</button>`).join('')}</div>`;
+if(!A.os.length)return ch+'<p class="mu">Нет данных за период.</p>';
+const bars=(v,l)=>{const m=mx(v)||1;return `<div class="bars">${v.map(x=>`<i style="height:${Math.max(2,x/m*100)}%" title="${rub(x)}"></i>`).join('')}</div><div class="bl">${l.map(x=>`<span>${x}</span>`).join('')}</div>`};
+const st=(v,t)=>`<div class="stat"><b>${v}</b><span class="mu">${t}</span></div>`;
+const tp=Object.entries(A.top).sort((a,b)=>b[1].m-a[1].m).slice(0,5),tm=tp.length?tp[0][1].m:1;
+return ch+`<div class="kp">${st(rub(K.rev),'Выручка')}${st(K.n,'Заказов')}${st(K.q,'Продано, шт.')}${st(rub(K.n?K.rev/K.n:0),'Средний чек')}${st(rub(K.com),'Комиссия')}${st(rub(K.rev-K.com),'К выплате')}${st(K.x,'Отмены')}${st(pk(A.wd,i=>WD[i])+' · '+pk(A.hr,i=>i+':00'),'Лучший день и час')}</div><div class="mu">Комиссия — процент от продаж, который маркетплейс берёт за работу площадки.</div><div class="mu">Комиссия сейчас: ${shop?comOf(shop):CFG.com}%</div><div class="mu">К выплате — выручка минус комиссия: эту сумму маркетплейс отдаёт магазину.</div>
+<h2>По дням</h2><div class="box">${bars(A.dv,A.dl)}</div>
+<h2>По дням недели</h2><div class="box">${bars(A.wd,WD)}</div>
+<h2>По часам</h2><div class="box">${bars(A.hr,A.hr.map((_,i)=>i%3?'':i))}</div>
+<h2>Топ товаров</h2><div class="box">${tp.map(([n,a])=>`<div class="sp"><span>${esc(n)} × ${a.q}</span><b>${rub(a.m)}</b></div><div class="hb"><i style="width:${a.m/tm*100}%"></i></div>`).join('')}</div>
+<h2>Оплата</h2><div class="box"><div class="sp"><span>Наличными</span><b>${rub(A.pay.cash)}</b></div><div class="sp"><span>Картой</span><b>${rub(A.pay.card)}</b></div></div>
+${shop?'':`<h2>По магазинам</h2><div class="box">${Object.entries(A.bs).sort((a,b)=>b[1].m-a[1].m).map(([n,b])=>`<div><div class="sp"><b>${esc(n)}</b><b>${rub(b.m)}</b></div><div class="mu">${b.n} заказов · ${b.q} шт. · комиссия ${rub(b.c)} · ${Math.round(b.m/(K.rev||1)*100)}%</div></div>`).join('')}</div>`}`}
+function report(){return `<div class="chips">${['',...SH.map(s=>s.name)].map(n=>`<button class="chip ${S.rs===n?'on':''}" onclick="S.rs=decodeURIComponent('${E(n)}');draw()">${n?esc(n):'Все магазины'}</button>`).join('')}</div>${ana(S.rs||null)}`}
+function cfg(k,v){v=k==='com'?Math.min(50,Math.max(0,+v||0)):['dBase','dKm','dMin','dFree'].includes(k)?Math.max(0,+v||0):v.trim();if(k==='name'&&!v)return;CFG[k]=v;save();toast('Сохранено');draw()}
+function clearDemo(){O=O.filter(o=>!o.demo);save();toast('Удалено');draw()}
+function settingsTab(){const N='type="number" inputmode="decimal" min="0" step="0.5"',f=(k,t,x='')=>`<label class="f">${t}<input ${x} value="${esc(CFG[k])}" onchange="cfg('${k}',this.value)"></label>`;
+return `<div class="box"><b>Маркетплейс</b>${f('name','Название')}${f('city','Город')}${f('com','Комиссия с продаж, %','type="number" inputmode="decimal"')}${f('legal','Юр. название / ФИО')}<div class="two">${f('inn','ИНН','inputmode="numeric"')}${f('phone','Телефон','inputmode="tel"')}</div>${f('addr','Адрес')}</div><div class="box"><b>🛵 Доставка и курьеры</b><div class="two">${f('dBase','Подача, сомони',N)}${f('dKm','За 1 км, сомони',N)}</div><div class="two">${f('dMin','Минимум, сомони',N)}${f('dFree','Бесплатно от суммы, сомони',N)}</div><div class="mu">Формула: подача + км × цена за км, но не меньше минимума. 0 в поле «бесплатно» — бесплатной доставки нет.</div><div class="km"><span>1 км → ${rub(fee(1,0))}</span><span>3 км → ${rub(fee(3,0))}</span><span>7 км → ${rub(fee(7,0))}</span></div><div class="mu">Вся сумма доставки идёт курьеру.</div></div><div class="box"><b>Данные</b><div class="mu">Демо-заказы нужны только для примера аналитики.</div><button class="btn sec" onclick="clearDemo()">Удалить демо-заказы</button></div>`}
+function geoShop(n){geo(async p=>{const s=shopOf(decodeURIComponent(n));if(!s)return;s.lat=p.lat;s.lng=p.lng;save();toast('Точка магазина сохранена');draw();const a=await revGeo(p);if(a){s.addr=a;save();draw()}})}
+function shopSet(k,v,n){const s=shopOf(n?decodeURIComponent(n):U.shop);v=k==='com'?(v===''?null:Math.min(50,Math.max(0,+v||0))):v.trim();s[k]=v;save();toast('Сохранено')}
+const legal=(s,n)=>`<label class="f">Юр. название / ФИО<input value="${esc(s.legal||'')}" onchange="shopSet('legal',this.value,'${n}')"></label><div class="two"><label class="f">ИНН<input inputmode="numeric" value="${esc(s.inn||'')}" onchange="shopSet('inn',this.value,'${n}')"></label><label class="f">Телефон<input inputmode="tel" value="${esc(s.phone||'')}" onchange="shopSet('phone',this.value,'${n}')"></label></div><div class="f" style="display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--mu)">Адрес магазина<div class="geo"><input value="${esc(s.addr||'')}" onchange="shopSet('addr',this.value,'${n}')"><button class="btn sec" onclick="geoShop('${n}')">📍 GPS</button></div></div>${has(s)?gEmb(s):'<div class="demo">Точка на карте не задана — нажмите 📍 GPS, находясь в магазине.</div>'}`;
+function shopSettings(s,sel){const e=E(s.name);return `<div class="box">${sel?'':`<label class="f">Название<input value="${esc(s.name)}" onchange="renameShop('${e}',this.value)"></label>`}<label class="f">Описание<input value="${esc(s.d||'')}" onchange="setDesc('${e}',this.value)"></label><label class="f">Фото<input type="file" accept="image/*" onchange="photo(this,decodeURIComponent('${e}'))"></label>${legal(s,e)}${sel?'<div class="mu">Эти данные печатаются на чеке покупателя.</div>':`<label class="f">Комиссия магазина, %<input type="number" inputmode="decimal" placeholder="${CFG.com}" value="${s.com==null?'':s.com}" onchange="shopSet('com',this.value,'${e}')"></label>`}</div>${sel?'':`<div class="two"><button class="btn sec" onclick="resetVotes('${e}')">Сбросить оценки</button>${dbtn('s',s.name)}</div>`}`}
+const pform=l=>`<div class="box"><b>Новый товар</b><input id="at" placeholder="Название"><div class="two"><select id="as">${l.map(n=>`<option>${esc(n)}</option>`).join('')}</select><select id="ac">${CATS.map(c=>`<option>${c}</option>`).join('')}</select></div><div class="two"><input id="ap" type="number" inputmode="numeric" placeholder="Цена"><input id="ak" type="number" inputmode="numeric" placeholder="Остаток"></div><input id="ae" placeholder="Эмодзи (📦)" maxlength="4"><button class="btn" onclick="adminAddP()">Добавить товар</button></div>`;
+const prow=x=>`<div class="box"><div class="sp"><b>${x.e} ${esc(x.t)}</b><span class="mu">${esc(x.s)}</span></div><div class="two"><label class="f">Цена<input type="number" inputmode="numeric" value="${x.p}" onchange="setPrice(${x.id},this.value)"></label><label class="f">Остаток<input type="number" inputmode="numeric" value="${x.st}" onchange="setStock(${x.id},this.value)"></label></div>${phEdit(x)}${dbtn('p',x.id)}</div>`;
+function adminShop(n,sel){const s=shopOf(n),st=stat(n),a=S.ast,np=P.filter(x=>x.s===n).length,no=O.filter(o=>o.items.some(i=>i.s===n)).length,T=[['an','Аналитика'],['items','Товары ('+np+')'],['orders','Заказы ('+no+')'],['set',sel?'Витрина':'Настройки'],['rev','Отзывы']];let b='';
+if(a==='an')b=ana(n);
+else if(a==='items')b=pform([n])+(P.filter(x=>x.s===n).map(prow).join('')||'<p class="mu">В магазине пока нет товаров.</p>');
+else if(a==='orders')b=O.filter(o=>o.items.some(i=>i.s===n)).map(o=>`<div class="box"><div class="sp"><b>Заказ №${o.id}</b><button class="chip" onclick="openR(${o.id})">🧾 Чек</button><span class="${stc(o.st)}">${o.st}</span></div><div class="mu">${esc(o.bn)} · ${esc(fmtP(o.b))} · ${o.d} · ${esc(o.addr)}</div>${tline(o)}${o.crn?`<div class="mu">🛵 Курьер: ${esc(o.crn)}</div>`:''}${o.items.filter(i=>i.s===n).map(i=>`<div class="sp"><span>${esc(i.t)} × ${i.q}</span><span>${rub(i.p*i.q)}</span></div>`).join('')}</div>`).join('')||'<p class="mu">Заказов нет.</p>';
+else if(a==='set')b=shopSettings(s,sel);
+else b=RV.map((r,i)=>r.s===n?`<div class="box"><div class="sp"><b>${esc(r.n)}</b><span class="mu">${r.d}</span></div><div>${esc(r.t)}</div>${sel?'':dbtn('r',i)}</div>`:'').join('')||'<p class="mu">Отзывов пока нет. Напишите первый.</p>';
+return `${sel?'':'<button class="lnk" onclick="S.as=null;draw()">← Все магазины</button>'}<div class="sp"><h1 style="margin:0">${s.e||'🏪'} ${esc(n)}</h1><span class="badge">${st.n?'★ '+st.r.toFixed(1):'Нет оценок'}</span></div><div class="chips" style="margin:10px 0">${T.map(t=>`<button class="chip ${a===t[0]?'on':''}" onclick="S.ast='${t[0]}';S.cf=null;draw()">${t[1]}</button>`).join('')}</div>${b}`}
+function openR(id){S.rid=id;go('receipt')}
+function receipt(){
+const o=O.find(x=>x.id==S.rid);
+if(!o||!U||!(U.role==='admin'||o.b===U.email||(U.shop&&o.items.some(i=>i.s===U.shop))))return '<h1>Чек</h1><p class="mu">Чек недоступен.</p>';
+const by={};o.items.forEach(i=>(by[i.s]=by[i.s]||[]).push(i));
+const dt=new Date(o.ts),code='ЧК-'+dt.getFullYear()+'-'+String(o.id).padStart(6,'0');
+QRT=[CFG.name,code,dt.toISOString().slice(0,16),(o.total+(o.fee||0))+' TJS',...Object.keys(by).map(n=>n+':'+((shopOf(n)||{}).inn||'-'))].join('|');
+return `<div class="noprint sp"><button class="lnk" onclick="go(S.prev||'orders')">← Назад</button><button class="btn" onclick="try{print()}catch(e){}">Печать</button></div>
+<div class="rc"><div class="ctr"><b>${esc(CFG.name)}</b><br>${esc(CFG.city)}${CFG.legal?'<br>'+esc(CFG.legal):''}${CFG.inn?'<br>ИНН: '+esc(CFG.inn):''}</div><hr>
+<b>Чек ${code}</b><div class="sp"><span>${dt.toLocaleString('ru-RU',{dateStyle:'short',timeStyle:'short'})}</span><span>Заказ №${o.id}</span></div><div>Покупатель: ${esc(o.bn)}</div><div>Адрес: ${esc(o.addr)}</div><div>Оплата: ${o.pay==='card'?'Картой при получении':'Наличными при получении'}</div><hr>
+${Object.keys(by).map(n=>{const s=shopOf(n)||{},sum=by[n].reduce((a,i)=>a+i.p*i.q,0);return `<div><b>Продавец: ${esc(s.legal||n)}</b></div><div class="rs">${esc(n)}${s.inn?' · ИНН: '+esc(s.inn):''}${s.phone?' · '+esc(s.phone):''}</div>${by[n].map(i=>`<div class="sp"><span>${esc(i.t)} × ${i.q}</span><span>${rub(i.p*i.q)}</span></div>`).join('')}<div class="sp rs"><span>Итого продавцу</span><span>${rub(sum)}</span></div>`}).join('<hr>')}<hr>
+<div class="sp"><span>Доставка${o.km!=null?' · '+(+o.km).toFixed(1)+' км':''}${o.crn?' · '+esc(o.crn):''}</span><span>${rub(o.fee||0)}</span></div><div class="sp"><b>ИТОГО</b><b>${rub(o.total+(o.fee||0))}</b></div><div id="qr" class="qr"></div><div class="ctr rs">Это товарный чек-подтверждение заказа. Фискальный чек выдаёт продавец в соответствии с законодательством.</div></div>`}
+function terms(){return `<h1>Условия и политика</h1><p class="mu">Шаблон. Перед запуском проверьте текст у юриста по законодательству Таджикистана.</p>
+<div class="box"><b>Условия использования</b><p>Продавцы отвечают за товары, цены и описания. Маркетплейс связывает покупателя и продавца и не заменяет документы продавца.</p></div>
+<div class="box"><b>Конфиденциальность</b><p>Мы храним имя, номер телефона и адрес доставки только для выполнения заказа. Данные не передаются третьим лицам без согласия покупателя, кроме случаев, предусмотренных законом.</p></div>
+<div class="box"><b>Возврат и обмен</b><p>Покупатель вправе вернуть товар надлежащего качества в срок, установленный законом. Для возврата свяжитесь с продавцом, его телефон указан на чеке.</p></div>
+<div class="box"><b>Контакты</b><p>${esc(CFG.name)}, ${esc(CFG.city)}${CFG.phone?', '+esc(CFG.phone):''}</p></div>`}
+function boot(){
+if(U){const f=USERS.find(x=>x.email===U.email);if(f)U=f}
+if(store.get('cur',0)!==1){const f=p=>Math.max(1,p>300?Math.round(p*.12/5)*5:Math.round(p*.12));P.forEach(x=>x.p=f(x.p));O.forEach(o=>{o.items.forEach(i=>i.p=f(i.p));o.total=o.items.reduce((a,i)=>a+i.p*i.q,0)});store.set('cur',1)}
+O.forEach(o=>{if(!o.ts)o.ts=Date.now()-2*864e5;if(!o.pay)o.pay='cash'});
+if(!store.get('demo',0)&&P.length){let s=7;const r=()=>(s=s*16807%2147483647)/2147483647,H=[10,11,12,13,14,17,18,19,20,21];
+for(let k=0;k<70;k++){const d=new Date();d.setDate(d.getDate()-Math.floor(r()*30));d.setHours(H[Math.floor(r()*10)],Math.floor(r()*60),0,0);const it=[];for(let j=1+Math.floor(r()*3);j>0;j--){const x=P[Math.floor(r()*P.length)];if(!it.some(i=>i.id===x.id))it.push({id:x.id,t:x.t,p:x.p,q:1+Math.floor(r()*2),s:x.s})}
+O.push({id:2000+k,b:'client@demo',bn:'Клиент',items:it,total:it.reduce((a,i)=>a+i.p*i.q,0),addr:'Исфара, ул. Ленина, 10',st:r()<.1?'Отменён':'Доставлен',pay:r()<.5?'card':'cash',d:d.toLocaleDateString('ru-RU'),ts:d.getTime(),demo:1})}
+O.sort((a,b)=>b.ts-a.ts);store.set('demo',1)}
+const MS={'Новый':ST[0],'Собран':ST[1],'В пути':ST[2]};O.forEach(o=>{if(MS[o.st])o.st=MS[o.st];if(o.fee==null){if(o.demo&&o.st===ST[3]){o.km=+(1+((o.id*37)%60)/10).toFixed(1);o.fee=fee(o.km,0);o.cr='courier@demo';o.crn='Фаррух'}else o.fee=0}if(!o.hist)o.hist=[{st:o.st,ts:o.ts}]});
+const OF=[[.0021,-.0034],[-.0043,.0018],[.0035,.0052],[-.0012,-.0061],[.0058,.0009],[-.0049,-.0041]];SH.forEach((s,i)=>{if(s.lat==null){const f=OF[i%6];s.lat=GC.lat+f[0];s.lng=GC.lng+f[1];s.addr=s.addr||'Исфара, центр города'}});
+if(!store.get('crseed',0)){if(!USERS.some(u=>u.email==='courier@demo'))USERS.push({email:'courier@demo',name:'Фаррух',role:'courier'});store.set('crseed',1)}
+save()}
+function out(){U=null;save();go('home')}
+boot();route();
+</script></body></html>
